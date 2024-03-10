@@ -1,0 +1,36 @@
+
+@keyframes rotating {
+    
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
+
+.colorblob{
+    
+    background-color: white;
+    height: 500px;
+    width: 700px;
+    position: absolute;
+    top:50%;
+    left: 50%;
+    translate: -50% -50%;
+    
+    z-index: -1;
+    background: linear-gradient(
+        to left,
+        rgb(145, 233, 101),
+        rgb(52, 24, 214)
+
+    );
+    border-radius: 50%;
+    
+    animation: linear 5s rotating 1s infinite;
+    
+}
+
+
+

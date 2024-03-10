@@ -1,0 +1,26 @@
+#root{
+  max-width: 100%;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  text-align: center;
+}
+
+.blur{
+    position:absolute;
+    top:0;
+
+    height: 100%;
+    width: 100%;
+    backdrop-filter: blur(200px);
+    
+    z-index: 2;
+}
+.hi{
+  
+color: white;
+z-index: 3;
+position: absolute;
+display: flex;
+
+}
