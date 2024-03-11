@@ -2,7 +2,7 @@
   
   "name": "quickchat",
   "homepage": "https://quickchat.chrisp030413.org",
-  "private": true,
+  "private": false,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
