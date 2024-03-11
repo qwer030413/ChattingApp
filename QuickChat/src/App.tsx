@@ -4,10 +4,16 @@ import ColorBlob from './components/colorblob/colorblob'
 import Anitext from './components/Headers/animatedText'
 import LoginComp from './components/login/Login'
 import { BsChatLeftDotsFill } from "react-icons/bs";
+import { useEffect, useState } from 'react';
 
 
 function App() {
-
+// window.location.reload(); 
+  const[track, setTrack] = useState(false);
+  
+  useEffect(() => {
+    setTrack(true)
+  }, [onpointermove])
   return (
     <>
     

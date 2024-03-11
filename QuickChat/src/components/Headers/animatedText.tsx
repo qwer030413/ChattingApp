@@ -11,7 +11,7 @@ export default function Anitext(value: any)
                 {sentance.map((letter: string, index: Key | null | undefined) =>{
                     return(
                         <text>
-                                <TextSpan key = {index} className = 'span'>
+                                <TextSpan key = {index}>
                                     {letter  === " " ? "\u00A0" : letter}
                                 </TextSpan>
                         </text>
