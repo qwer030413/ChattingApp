@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 
 function App() {
 // window.location.reload(); 
-  const[track, setTrack] = useState(false);
+  const[_track, setTrack] = useState(false);
   
   useEffect(() => {
     setTrack(true)
