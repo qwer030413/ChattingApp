@@ -1,0 +1,14 @@
+.header{
+    font-size: 80px;
+    color: white;
+    display: inline-block;
+    z-index: 3;
+    font-family: "Outfit", sans-serif;
+    font-weight: bold;
+
+    max-height: 100px;
+    align-items: start;
+}
+.span{
+    display: inline-block;
+}

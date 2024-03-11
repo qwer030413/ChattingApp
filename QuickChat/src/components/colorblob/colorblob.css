@@ -1,12 +1,16 @@
 
 @keyframes rotating {
     
-    from{
-        transform: rotate(0deg);
+    0% {
+        transform: rotate(0deg) scale(1.2);
     }
-    to{
-        transform: rotate(360deg);
+    50% {
+        transform: rotate(180deg)  scale(0.9);
     }
+    100%{
+        transform: rotate(360deg) scale(1.2);
+    }
+    
 }
 
 .colorblob{
@@ -22,8 +26,8 @@
     z-index: -1;
     background: linear-gradient(
         to left,
-        rgb(145, 233, 101),
-        rgb(52, 24, 214)
+        rgb(184, 255, 148),
+        rgb(193, 183, 255)
 
     );
     border-radius: 50%;

@@ -5,8 +5,10 @@ export default function ColorBlob(){
     // addEventListener("pointermove", (event) => {});
     document.body.onpointermove = event => {
         const{clientX, clientY} = event;
+        
         blob?.animate(
             {
+                
                 left:  `${clientX}px`,
                 top: `${clientY}px`
             },
