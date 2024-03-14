@@ -1,7 +1,7 @@
 import './headers.css';
 import {motion, useAnimationControls } from "framer-motion"
 
-const TextSpan = ({children}) =>{
+const TextSpan = ({children}: {children: any}) =>{
     const controls = useAnimationControls();
     const animation = () => {
 
