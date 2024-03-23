@@ -38,3 +38,18 @@
     background-color: rgb(230, 234, 238);
     
 }
+
+.SignUpCont{
+    width: 40%;
+    height: 500px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap:1rem;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+}
+.signupHeader{
+    color: black;
+}

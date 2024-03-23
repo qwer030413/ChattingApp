@@ -24,7 +24,7 @@ const TextSpan = ({children}: {children: any}) =>{
     }
 
     return(
-        <motion.span className = "span" whileHover={{scale: 1.1, color:"#00A6ED",  transition: { duration: 0.1 }}} animate = {controls}
+        <motion.span className = "span" whileHover={{scale: 1.1, color:"#92A7F3",  transition: { duration: 0.1 }}} animate = {controls}
         onMouseOver={() => animation()}
         >
 

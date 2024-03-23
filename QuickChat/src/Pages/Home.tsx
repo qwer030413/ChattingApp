@@ -3,7 +3,7 @@ import Anitext from "../components/Headers/animatedText";
 import LoginComp from "../components/login/Login";
 import { useEffect, useState } from 'react';
 import LoginButton from "../components/buttons/LoginButton";
-
+import '../App.css'
 
 
 export default function Home(){

@@ -1,8 +1,14 @@
+import './pages.css'
+import SignUpContainer from '../components/login/SignUpComp';
 
 export default function SignUp(){
     return(
         <>
-        <div>Sign Up</div>
+        <div className='SignUpPage'>
+            <SignUpContainer/>
+        
+        </div>
+           
         </>
     );
 }
