@@ -1,8 +1,7 @@
 import "./loginbtn.css"
-import { Link } from "react-router-dom";
 import { motion } from 'framer-motion';
 import { useNavigate } from "react-router-dom";
-export default function LoginButton(text:string, classname:string, address?:string){
+export default function LoginButton(text:string, classname:string, address?:any){
   const navigate = useNavigate();
 
     return(
