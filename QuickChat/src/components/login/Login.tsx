@@ -1,6 +1,6 @@
 
 import './login.css';
-
+import LoginButton from '../buttons/LoginButton';
 export default function LoginComp(){
     return(
         <>
@@ -10,6 +10,7 @@ export default function LoginComp(){
                 
                 <input id = "emailval"type='email' className='SignIn' required= {true}  placeholder='Email'/>
                 <input id = "pwval" type="password" className='SignIn' required = {true} placeholder='Password' />
+                {LoginButton("Sign In", "LoginBtn")}
                 {/* <BiSolidShow className='showPW'/> */}
 
                 
