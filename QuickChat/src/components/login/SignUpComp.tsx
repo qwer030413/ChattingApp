@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LoginButton from "../buttons/LoginButton";
 import './login.css'
 import Axios from 'axios'
@@ -11,6 +11,18 @@ export default function SignUpContainer(){
     const [secondPassword, setSecondPassword] = useState("")
     const [Name, setName] = useState("");
     const navigate = useNavigate(); 
+    useEffect(() => {
+        const handleEsc = (event: { key: string; }) => {
+           if (event.key === 'Escape') {
+            navigate("/")
+          }
+        };
+        window.addEventListener('keydown', handleEsc);
+    
+        return () => {
+          window.removeEventListener('keydown', handleEsc);
+        };
+      }, []);
     function goBack(){
         navigate("/")
         console.log("a")
@@ -37,6 +49,7 @@ export default function SignUpContainer(){
                     newName: Name
                 }).then(res => {
                     toast.success("Account Created!", {id:"accreated!"});
+                    navigate("/")
                     console.log(res)
                 }).catch(err => {
                     toast.error("Email taken, Try a different Email!", {id:"logindne!"});
