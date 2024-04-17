@@ -3,7 +3,7 @@ import Home from './Pages/Home'
 import SignUp from './Pages/SignUp';
 import { Route,Routes } from 'react-router-dom';
 import ChatHome from './Pages/chat';
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 function App() {
   return(
     <>

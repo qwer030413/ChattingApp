@@ -52,6 +52,7 @@ export default function SignUpContainer(){
                     navigate("/")
                     console.log(res)
                 }).catch(err => {
+                    console.log(err)
                     toast.error("Email taken, Try a different Email!", {id:"logindne!"});
                 
                 });
