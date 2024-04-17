@@ -2,13 +2,14 @@ import ColorBlob from "../components/colorblob/colorblob";
 import Anitext from "../components/Headers/animatedText";
 import LoginComp from "../components/login/Login";
 import { useEffect, useState } from 'react';
-import LoginButton from "../components/buttons/LoginButton";
+// import LoginButton from "../components/buttons/LoginButton";
+import DefaultNavBtn from "../components/buttons/defaultNavBtn";
 import '../App.css'
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 
 export default function Home(){
     const[_track, setTrack] = useState(false);
-    const navigate = useNavigate(); 
+    // const navigate = useNavigate(); 
     useEffect(() => {
         setTrack(true)
     }, [onpointermove])
@@ -26,7 +27,7 @@ export default function Home(){
             <Anitext text = "Quick " class = "header"/>
             <Anitext text = "Chat" class = "header"/>
             </div>
-            {LoginButton("Get Started", "getstarted", "/SignUp")}
+            {DefaultNavBtn("Get Started", "getstarted", "/SignUp")}
             
             
         </div>

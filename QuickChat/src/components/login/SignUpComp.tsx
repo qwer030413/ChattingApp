@@ -36,7 +36,6 @@ export default function SignUpContainer(){
                     newPassword: Password,
                     newName: Name
                 }).then(res => {
-                    navigate('/pages/Login.ts')
                     toast.success("Account Created!", {id:"accreated!"});
                     console.log(res)
                 }).catch(err => {
@@ -69,7 +68,7 @@ export default function SignUpContainer(){
                 <input id = "emailval"type='email' className='SignIn' required= {true} onChange={(e) => setEmail(e.target.value)} placeholder='Email'/>
                 <input id = "pwval" type="password" className='SignIn' required = {true} onChange={(e) => setPassword(e.target.value)} placeholder='Password' />
                 <input id = "repeatpw" type="password" className='SignIn' required = {true} onChange={(e) => setSecondPassword(e.target.value)} placeholder='Repeat Password' />
-                {/* {LoginButton("Sign Up", "LoginBtn", SignUserIn)} */}
+                {LoginButton("Sign Up", "LoginBtn", SignUserIn)}
             </div>
         </>
     );
