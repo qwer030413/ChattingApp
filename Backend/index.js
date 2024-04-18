@@ -37,3 +37,10 @@ app.post('/signUp', (req, res) => {
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });
+
+app.all("/api/*", function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+  res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
+  return next();
+});
