@@ -7,3 +7,4 @@ CREATE TABLE Users(
     pw VARCHAR(255),
     userName VARCHAR(255)
 );
+
