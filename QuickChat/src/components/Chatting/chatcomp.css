@@ -1,0 +1,39 @@
+.ChattingContent{
+    display: flex;
+    align-items: center;
+    justify-self: start;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+.Title{
+    background-color: rgb(6, 43, 74);
+    width: 100%;
+    height: 50px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+.chatPlace{
+    width: 100%;
+    height: 90%;
+}
+
+.ChattingBox{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(15, 42, 67);
+    border-radius: 10px;
+    margin-bottom: 15px;
+    color: white;
+    border: none;
+
+}
+
+.ChatBox{
+    width: 98%;
+    height: 60px;
+    display: flex;
+    margin-bottom: 15px;
+    gap:0.3rem;
+}

@@ -8,10 +8,12 @@
     justify-content: start;
     align-items: center;
     /* padding: 10px; */
-    background-color: rgb(13, 57, 57);
+    background-color: rgb(7, 3, 25);
     height: 100%;
     gap:0.5rem;
     z-index: 10;
+    cursor: pointer;
+
     
 }
 
@@ -25,4 +27,8 @@
     height: 60px;
     width: 60px;
     border-radius: 15px;
+    
+}
+.HomeIcon:hover{
+    background-color: white;
 }

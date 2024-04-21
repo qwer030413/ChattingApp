@@ -12,6 +12,33 @@ const db = mysql.createPool({
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
+const io = require('socket.io')(3001, {
+    cors: {
+        origin: ['http://localhost:5173'],
+    },
+})
+io.on('connection', socket =>{
+    console.log(socket.id)
+    socket.on('send-message', (message) => {
+        console.log(message)
+    })
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 app.post('/signUp', (req, res) => {
     const signUp = "INSERT INTO users(email, pw, userName) VALUES (?,?,?);"
