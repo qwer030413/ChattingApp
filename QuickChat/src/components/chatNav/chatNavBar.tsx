@@ -21,12 +21,12 @@ export default function ChatNavBar(){
     {
         label:<IoHomeSharp/>,
         id: 1,
-        address: "/chatHomeList"
+        address: "/chatHome"
     },
     {
         label:<IoChatboxEllipses/>,
         id: 2,
-        address: "/chatPage"
+        address: "/chatHome/chatPage"
     },
     
 ];

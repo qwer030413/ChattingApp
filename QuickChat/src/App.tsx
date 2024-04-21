@@ -9,12 +9,12 @@ function App() {
   return(
     <>
     <div><Toaster/></div>
-    <Routes>
-      <Route path = "/" element = {<Home />} />
-      <Route path = "/SignUp" element = {<SignUp />} />
-      <Route path = "/chatHome" element = {<ChatHome />} />
-      <Route path = "/chatPage" element = {<ChatPage />} />
-    </Routes>
+      <Routes>
+        <Route path = "/" element = {<Home />} />
+        <Route path = "/SignUp" element = {<SignUp />} />
+        <Route path = "/chatHome" element = {<ChatHome />} />
+        {/* <Route path = "/chatHome/chatPage" element = {<ChatPage />} /> */}
+      </Routes>
     </>
     
   );
