@@ -4,6 +4,7 @@ import SignUp from './Pages/SignUp';
 import { Route,Routes } from 'react-router-dom';
 import ChatHome from './Pages/chat';
 import { Toaster } from 'react-hot-toast';
+import ChatPage from './Pages/chatPage';
 function App() {
   return(
     <>
@@ -12,6 +13,7 @@ function App() {
       <Route path = "/" element = {<Home />} />
       <Route path = "/SignUp" element = {<SignUp />} />
       <Route path = "/chatHome" element = {<ChatHome />} />
+      <Route path = "/chatPage" element = {<ChatPage />} />
     </Routes>
     </>
     

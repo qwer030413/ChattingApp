@@ -50,9 +50,11 @@ export default function SignUpContainer(){
                 }).then(res => {
                     toast.success("Account Created!", {id:"accreated!"});
                     navigate("/")
+                    console.log("worked")
                     console.log(res)
                 }).catch(err => {
                     console.log(err)
+                    console.log("weird")
                     toast.error("Email taken, Try a different Email!", {id:"logindne!"});
                 
                 });

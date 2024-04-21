@@ -9,8 +9,8 @@
             "server": "localhost",
             "port": 3306,
             "driver": "MySQL",
-            "name": "ChattingApp",
-            "database": "QuickChat",
+            "name": "QuickChat",
+            "database": "chattingapp",
             "username": "root",
             "password": "qwer"
         }
