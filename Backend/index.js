@@ -19,9 +19,13 @@ const io = require('socket.io')(3001, {
 })
 io.on('connection', socket =>{
     console.log(socket.id)
-    socket.on('send-message', (message) => {
-        socket.broadcast.emit('recieve-message', message)
-        console.log(message)
+    socket.on('send-message', (message, room) => {
+        if(room == ""){
+            socket.broadcast.emit('recieve-message', message)
+        }
+        else{
+            socket.to(room).emit('recieve-message', message)
+        }
     })
 })
 
