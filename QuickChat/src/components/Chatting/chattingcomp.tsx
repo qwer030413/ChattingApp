@@ -8,47 +8,30 @@ export default function ChattingComp(){
     let user = "Aditi"
     const [message, setMessage] = useState("");
     const [newMessage, setNewMessage] = useState([] as any)
-    const [getMessage, setGetMessage] = useState("")
     const [room, setRoom] = useState("")
     const socket = io.connect("http://localhost:3001",{ transports : ['websocket'] })
    
-    // useEffect(() => {
-    //     const handleEnter = (event: { key: string; }) => {
-    //        if (event.key === 'Enter') {
-    //         console.log("Enter")
-    //         {sendMessage()}
-    //       }
-    //     };
-    //     window.addEventListener('keydown', handleEnter);
     
-    //     return () => {
-    //         window.removeEventListener('keydown', handleEnter);
-    //     };
-    //   }, []);
-    useEffect(() => {
-        // socket = io('http://localhost:3001')
-        socket.on('connect', () => {
-            console.log(`connected with id: ${socket.id}`)
-        })
         
-    }, []);
-    // useEffect(() => {
-    //     // socket = io('http://localhost:3001')
-    //     socket.on('recieve-message', a => {
-    //         setNewMessage([
-    //             ...newMessage,
-    //             {text: a, id: initialId}
-    //         ])
-    //     })
-    // }, [socket]);
-    socket.on('recieve-message', a => {
-            setNewMessage([
-                ...newMessage,
-                {text: a, id: initialId}
-            ])
-            initialId = initialId + 1
+    socket.on('connect', () => {
+            console.log(`connected with id: ${socket.id}`)
+            console.log(socket)
         })
 
+    
+    function receiveMessage() {
+        if (socket) {
+            socket.on('recieve-message', a => {
+                setNewMessage((prev: any) => [...prev, {
+                    text: a, id: initialId
+                }])
+                initialId = initialId + 1
+            })
+        }
+    }
+    useEffect(() => {
+        receiveMessage();
+    }, [socket]);
     function sendMessage(){
         setNewMessage([
             ...newMessage,
@@ -77,7 +60,7 @@ export default function ChattingComp(){
             </div>
             <div className='chatPlace'>
                 {newMessage.map((msg:any, i:any) => (
-                    <h1 key = {i    }>{msg.text}</h1>
+                    <h1 key = {i}>{msg.text}</h1>
                 ))}
             </div>
             <div className="ChatBox">

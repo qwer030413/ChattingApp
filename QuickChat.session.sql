@@ -4,3 +4,8 @@ CREATE TABLE users(
     pw VARCHAR(255),
     username VARCHAR(255)
 );
+-- @block
+CREATE TABLE Friends(
+    email VARCHAR(255) NOT NULL UNIQUE,
+    username VARCHAR(255)
+);

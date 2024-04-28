@@ -15,6 +15,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 const io = require('socket.io')(3001, {
     cors: {
         origin: ['http://localhost:5173'],
+        methods: ["GET", "POST"],
     },
 })
 io.on('connection', socket =>{
@@ -24,6 +25,7 @@ io.on('connection', socket =>{
             socket.broadcast.emit('recieve-message', message)
         }
         else{
+            console.log(message)
             socket.to(room).emit('recieve-message', message)
         }
     })
@@ -87,6 +89,40 @@ app.post('/login', (req, res) => {
 
 
 });
+app.post('/AddFriend', (req, res) => {
+    const userFind = "SELECT * FROM users WHERE email = ?;"
+    const addFriend = "INSERT INTO friends(email,userName) VALUES (?,?);"
+    db.query(userFind,[req.body.Email], (err, result) => {
+        if(err)
+        {
+            console.log(err)
+            return res.status(404).json(err)
+        }
+        else if(result.length > 0)
+        {
+            db.query(addFriend,[req.body.Email, result[0].username], (err2, result2) => {
+                if(err2)
+                {
+                    console.log(err2)
+                }
+                else{
+                    return res.json(result2)
+                }
+            })
+            // console.log(result[0].username)
+            return res.json(result)
+        }
+        else
+        {
+            return res.status(404).json(err)
+        }
+    })
+    
+
+
+});
+
+
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });
