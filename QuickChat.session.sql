@@ -9,3 +9,7 @@ CREATE TABLE Friends(
     email VARCHAR(255) NOT NULL UNIQUE,
     username VARCHAR(255)
 );
+
+-- @block
+ALTER TABLE friends
+ADD COLUMN myEmail data_type [constraint];

@@ -5,12 +5,12 @@ import { useNavigate } from "react-router-dom";
 import Axios from 'axios'
 import toast from "react-hot-toast";
 import { useState } from 'react';
+var curUser = ""
 export default function LoginComp(){
     const navigate = useNavigate(); 
     const [tempEmail, setEmail] = useState("")
     const [tempPassword, setPassword] = useState("");
     function logUserIn(event: { preventDefault: () => void; }){
-        console.log("aaaa")
         if((document.getElementById("emailval") as HTMLInputElement).value.trim() != '' &&
         (document.getElementById("pwval") as HTMLInputElement).value.trim() != '')
         {
@@ -21,7 +21,8 @@ export default function LoginComp(){
             }).then(res => {
                 toast.success("Signed In!", {id:"loggedin!"});
                 navigate("/chatHome")
-                console.log(res.data)
+                console.log(res.data[0].email)
+                curUser = res.data[0].email
             }).catch(err => {
                 console.log(err)
                 toast.error("Account Does not Exist!", {id:"logindne!"});
@@ -53,3 +54,7 @@ export default function LoginComp(){
         </>
     );
 }
+export function setCurUser(user:string){
+    curUser = user
+}
+export {curUser}
