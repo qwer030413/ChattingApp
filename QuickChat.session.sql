@@ -12,4 +12,4 @@ CREATE TABLE Friends(
 
 -- @block
 ALTER TABLE friends
-ADD COLUMN myEmail data_type [constraint];
+ADD COLUMN myEmail VARCHAR(255);

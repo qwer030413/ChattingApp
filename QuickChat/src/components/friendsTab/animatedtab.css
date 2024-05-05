@@ -1,0 +1,104 @@
+.minicontainer1{
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+    height: 600px;
+    justify-content: top;
+    padding: 50px;
+    align-items: center;
+    /* background-color: rgb(25, 27, 112); */
+    border-radius: 30px;
+
+}
+.minicontent{
+    width: 100%;
+    align-items: top;
+    margin-top: 100px;
+    justify-content: center;
+    height: 100%;
+    display: flex;
+}
+.minicontainer2{
+    display: flex;
+    flex-direction: column;
+    width: 750px;
+    height: 600px;
+    justify-content: top;
+    padding: 50px;
+    align-items: center;
+    /* background-color: rgb(57, 47, 97); */
+    border-radius: 30px;
+}
+.minitabbtn{
+    cursor: pointer;
+    position: absolute;
+    
+}
+.himinitabbtn{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    padding: 15px;
+    
+    
+}
+.indicator{
+    background-color: white;
+    border-radius: 15px;
+    inset: 0;
+    position: absolute;
+    cursor: pointer;
+  
+    
+}
+.hi{
+    display: flex;
+    position: relative;
+    padding: 15px;
+    
+    
+}
+.highlight{
+    position: relative;
+    cursor: pointer;
+    color:white;
+    mix-blend-mode:exclusion;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    
+}
+
+.TabButton
+{
+    font-size: 20px;
+}
+.selected{
+    /* margin-bottom: 30px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.content{
+    display:none;
+}
+.minitab{
+    display: flex;
+    gap: 1.5rem;
+    /* margin-bottom: 50px; */
+    text-align: center;
+    background-color: rgb(27, 25, 27);
+    /* font-weight: bold; */
+    border-radius: 15px;
+    /* padding: 10px; */
+    
+}
+
+.showPomodoro{
+    display: block;
+    width: 750px;
+    background-color: transparent;
+    /* animation: fadeIn 2s; */
+}
+

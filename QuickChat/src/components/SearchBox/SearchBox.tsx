@@ -3,6 +3,7 @@ import { useState } from "react";
 import { BsSearch } from "react-icons/bs";
 import Axios from 'axios'
 import toast from "react-hot-toast";
+import { curUser } from '../login/Login';
 
 
 
@@ -14,6 +15,7 @@ export default function SearchBox(){
             if(search.trim() != ''){
                 Axios.post("http://localhost:3000/AddFriend", {
                 Email: search,
+                myEmail: curUser,
                 }).then(res => {
                     toast.success("Added Friend!", {id:"friend!"});
                     console.log(res.data)

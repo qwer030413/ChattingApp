@@ -5,13 +5,13 @@
     flex-direction: column;
     font-size: 35px;
     width:100px;
-    justify-content: start;
+    justify-content: center;
     align-items: center;
     /* padding: 10px; */
-    background-color: rgb(7, 3, 25);
+    background-color: rgb(10, 9, 15);
     min-width: 100px;
     height: 100%;
-    gap:0.5rem;
+    gap:1rem;
     z-index: 10;
     cursor: pointer;
 
@@ -27,9 +27,9 @@
     background-color: rgb(64, 64, 203);
     height: 60px;
     width: 60px;
-    border-radius: 15px;
+    border-radius: 22px;
     
 }
-.HomeIcon:hover{
+/* .HomeIcon:hover{
     background-color: white;
-}
+} */

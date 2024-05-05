@@ -41,6 +41,33 @@ io.on('connection', socket =>{
 
 
 
+// app.get('/working', (req, res) => {
+//     res.status(200).send({
+//         pleasework: "worked!"
+//     })
+// })
+
+// app.post('/working/a', (req, res) => {
+//     const {email} = req.body;
+//     if (!email){
+//         res.status(418).send({message: "error!"})
+//         console.log("nuar")
+//     }
+//     res.send({
+//         email: email,
+        
+//     })
+// })
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -91,7 +118,7 @@ app.post('/login', (req, res) => {
 });
 app.post('/AddFriend', (req, res) => {
     const userFind = "SELECT * FROM users WHERE email = ?;"
-    const addFriend = "INSERT INTO friends(email,userName) VALUES (?,?);"
+    const addFriend = "INSERT INTO friends(email,userName,myEmail) VALUES (?,?,?);"
     db.query(userFind,[req.body.Email], (err, result) => {
         if(err)
         {
@@ -100,16 +127,16 @@ app.post('/AddFriend', (req, res) => {
         }
         else if(result.length > 0)
         {
-            db.query(addFriend,[req.body.Email, result[0].username], (err2, result2) => {
+            db.query(addFriend,[req.body.Email, result[0].username, req.body.myEmail], (err2, result2) => {
                 if(err2)
                 {
                     console.log(err2)
+                    return res.status(404).json(err2)
                 }
                 else{
                     return res.json(result2)
                 }
             })
-            // console.log(result[0].username)
             return res.json(result)
         }
         else
@@ -121,7 +148,27 @@ app.post('/AddFriend', (req, res) => {
 
 
 });
+app.post('/contacts', (req, res) => {
+    const userFind = "SELECT * FROM friends WHERE myEmail = ?;"
+    db.query(userFind,[req.body.email], (err, result) => {
+        if(err)
+        {
+            console.log(err)
+            return res.status(404).json(err)
+        }
+        else if(result.length > 0)
+        {
+            return res.json(result)
+        }
+        else
+        {
+            return res.status(404).json(err)
+        }
+    })
+    
 
+
+});
 
 app.listen(3000, () =>{
     console.log("running on port 3000")

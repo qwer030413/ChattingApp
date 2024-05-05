@@ -9,7 +9,7 @@ export default function ChattingComp(){
     const [message, setMessage] = useState("");
     const [newMessage, setNewMessage] = useState([] as any)
     const [room, setRoom] = useState("")
-    const socket = io.connect("http://localhost:3001",{ transports : ['websocket'] })
+    const socket = io.connect("http://localhost:3001")
    
     
         

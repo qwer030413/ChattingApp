@@ -3,6 +3,7 @@ import { IoHomeSharp } from "react-icons/io5";
 import { color, motion } from 'framer-motion';
 import { IoChatboxEllipses } from "react-icons/io5";
 import { useNavigate} from 'react-router-dom';
+import { MdAccountCircle } from "react-icons/md";
 
 
 export default function ChatNavBar(){
@@ -16,7 +17,7 @@ export default function ChatNavBar(){
     const hover = {
         scale: 1.15,
         textShadow: "0px 0px 8px rgb(255, 255, 255)",
-        color:"#4000FD"
+        // color:"#4000FD" 
         
     }
     let tabs = [
@@ -29,6 +30,11 @@ export default function ChatNavBar(){
         label:<IoChatboxEllipses/>,
         id: 2,
         address: "/chatHome/chatPage"
+    },
+    {
+        label:<MdAccountCircle/>,
+        id: 3,
+        address: "/Account"
     },
     
 ];
