@@ -3,6 +3,10 @@ import { useState } from 'react';
 import {motion, useAnimationControls } from "framer-motion";
 import './animatedtab.css'
 import SearchBox from '../SearchBox/SearchBox';
+import FriendRequests from './friendRequest';
+
+
+
 let totalHistorySec = 0;
 let minitabs = [
     {
@@ -20,7 +24,6 @@ let minitabs = [
     
 export default function MiniTab(): ReactElement{
     const [tabs, setTabs] = useState(1);
-    const firstRender = useRef(true);
     const left = useAnimationControls()
     let a = 1;
     function updateTabs(id: number)
@@ -70,12 +73,12 @@ export default function MiniTab(): ReactElement{
             
             <div className='minicontent'>
             <motion.div className={tabs == 1? "showPomodoro" : "content"}>
-            <h1>Add friends</h1>
-            <SearchBox />
+                <h1>Add friends</h1>
+                <SearchBox />
             </motion.div>
             <motion.div className={tabs == 2? "showShortBreak" : "content"}>
-            <h1>Friend Requests</h1>
-            
+                <h1>Friend Requests</h1>
+                <FriendRequests />
             </motion.div>
             </div>
             

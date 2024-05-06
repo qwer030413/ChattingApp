@@ -13,9 +13,20 @@ export default function SearchBox(){
     function SearchUser(){
         console.log(search.trim())
             if(search.trim() != ''){
-                Axios.post("http://localhost:3000/AddFriend", {
-                Email: search,
-                myEmail: curUser,
+                // Axios.post("http://localhost:3000/AddFriend", {
+                // Email: search,
+                // myEmail: curUser,
+                // }).then(res => {
+                //     toast.success("Added Friend!", {id:"friend!"});
+                //     console.log(res.data)
+                // }).catch(err => {
+                //     console.log(err)
+                //     toast.error("Account Does not Exist!", {id:"friendDNE!"});
+                
+                // });
+                Axios.post(`http://localhost:3000/friendReq/${curUser}/${search}`, {
+                    Email: search,
+                    myEmail: curUser,
                 }).then(res => {
                     toast.success("Added Friend!", {id:"friend!"});
                     console.log(res.data)

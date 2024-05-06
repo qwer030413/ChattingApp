@@ -13,3 +13,9 @@ CREATE TABLE Friends(
 -- @block
 ALTER TABLE friends
 ADD COLUMN myEmail VARCHAR(255);
+
+-- @block
+CREATE TABLE friendReq(
+    fromEmail VARCHAR(255) NOT NULL,
+    toEmail VARCHAR(255) NOT NULL
+);

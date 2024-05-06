@@ -47,30 +47,32 @@ io.on('connection', socket =>{
 //     })
 // })
 
-// app.post('/working/a', (req, res) => {
-//     const {email} = req.body;
-//     if (!email){
-//         res.status(418).send({message: "error!"})
-//         console.log("nuar")
-//     }
-//     res.send({
-//         email: email,
-        
-//     })
-// })
-
-
-
-
-
-
-
-
-
-
-
-
-
+app.post('/friendReq/:from/:to', (req, res) => {
+    
+    // console.log(req.body.Email)
+    // if (!email){
+    //     res.status(418).send({message: "error!"})
+    // }
+    
+    const request = "INSERT INTO friendreq(fromEmail, toEmail) VALUES (?,?);"
+    db.query(request,[req.body.myEmail, req.body.Email,], (err, result) => {
+        if(err)
+        {
+            console.log("wee")
+            return res.status(404).json(err)
+        }
+        else
+        {
+            res.send({
+                myEmail: req.body.myEmail,
+                toEmail: req.body.Email,
+                
+            })
+            // return res.json(result)
+        }
+    })
+    
+})
 
 
 
@@ -83,6 +85,7 @@ app.post('/signUp', (req, res) => {
         }
         else if(result.length > 0)
         {
+            console.log(result)
             return res.json(result)
         }
         else
@@ -137,7 +140,7 @@ app.post('/AddFriend', (req, res) => {
                     return res.json(result2)
                 }
             })
-            return res.json(result)
+            // return res.json(result)
         }
         else
         {
@@ -165,11 +168,36 @@ app.post('/contacts', (req, res) => {
             return res.status(404).json(err)
         }
     })
-    
-
-
+});
+app.post('/getFriendReq', (req, res) => {
+    const userFind = "SELECT * FROM friendreq WHERE toEmail = ?;"
+    db.query(userFind,[req.body.email], (err, result) => {
+        if(err)
+        {
+            console.log(err)
+            return res.status(404).json(err)
+        }
+        else if(result.length > 0)
+        {
+            return res.json(result)
+        }
+        else
+        {
+            return res.status(404).json(err)
+        }
+    })
 });
 
+app.post('/deleteRequest', (req, res) => {
+    const deleteToDo = "DELETE FROM friendreq WHERE fromEmail=? AND toEmail=?;"
+    db.query(deleteToDo,[req.body.fromEmail, req.body.recieveEmail], (err, result) => {
+        if(err)
+        {
+            console.log(err)
+        }
+        
+    })
+});
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });
