@@ -2,15 +2,19 @@ import { useEffect, useState } from 'react';
 import './chatcomp.css'
 import { motion } from 'framer-motion';
 import * as io from 'socket.io-client'
-
+var curChat = ""
 var initialId = 0;
-export default function ChattingComp(){
+
+export default function ChattingComp(currentChat:string){
     let user = "Aditi"
     const [message, setMessage] = useState("");
     const [newMessage, setNewMessage] = useState([] as any)
     const [room, setRoom] = useState("")
     const socket = io.connect("http://localhost:3001")
-   
+    const[curChatUser, setCurChat] = useState("")
+    useEffect(() => {
+        setCurChat(curChat)
+    },[changeCurChat])
     
         
     socket.on('connect', () => {
@@ -56,7 +60,7 @@ export default function ChattingComp(){
     return(
          <div className="ChattingContent">
             <div className="Title">
-                {user}
+                {currentChat}
             </div>
             <div className='chatPlace'>
                 {newMessage.map((msg:any, i:any) => (
@@ -75,3 +79,10 @@ export default function ChattingComp(){
         </div>
     );
 }
+
+export function changeCurChat(email:string)
+{
+    curChat = email
+    console.log(email)
+}
+export {curChat}

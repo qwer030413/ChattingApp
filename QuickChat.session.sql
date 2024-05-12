@@ -19,3 +19,8 @@ CREATE TABLE friendReq(
     fromEmail VARCHAR(255) NOT NULL,
     toEmail VARCHAR(255) NOT NULL
 );
+-- @block
+TRUNCATE TABLE friends;
+
+-- @block
+ALTER TABLE friends  DROP COLUMN username;

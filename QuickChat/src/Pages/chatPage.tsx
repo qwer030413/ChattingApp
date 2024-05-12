@@ -9,7 +9,7 @@ export default function ChatPage(){
         <div className="chatHome">
             <ChatNavBar /> 
             <Contacts />
-            <ChattingComp />
+            {/* <ChattingComp /> */}
         </div>
         
     );
