@@ -18,8 +18,8 @@ export default function ChattingComp(currentChat:string){
     
         
     socket.on('connect', () => {
-            console.log(`connected with id: ${socket.id}`)
-            console.log(socket)
+            // console.log(`connected with id: ${socket.id}`)
+            // console.log(socket)
         })
 
     

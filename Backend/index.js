@@ -19,7 +19,7 @@ const io = require('socket.io')(3001, {
     },
 })
 io.on('connection', socket =>{
-    console.log(socket.id)
+    // console.log(socket.id)
     socket.on('send-message', (message, room) => {
         if(room == ""){
             socket.broadcast.emit('recieve-message', message)
@@ -149,7 +149,25 @@ app.post('/AddFriend', (req, res) => {
 });
 app.post('/contacts', (req, res) => {
     const userFind = "SELECT * FROM friends WHERE myEmail = ?;"
-    db.query(userFind,[req.body.email,req.body.email], (err, result) => {
+    db.query(userFind,[req.body.email], (err, result) => {
+        if(err)
+        {
+            console.log(err)
+            return res.status(404).json(err)
+        }
+        else if(result.length > 0)
+        {
+            return res.json(result)
+        }
+        else
+        {
+            return res.status(404).json(err)
+        }
+    })
+});
+app.post('/getName', (req, res) => {
+    const userInfo = "SELECT * FROM users WHERE email = ?;"
+    db.query(userInfo,[req.body.email], (err, result) => {
         if(err)
         {
             console.log(err)
