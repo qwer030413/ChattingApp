@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import * as io from 'socket.io-client'
 import Axios from 'axios'
 import { curUser } from '../login/Login';
-
+import { curChatId } from '../Contacts/Contacts';
 var curChat = ""
 var initialId = 0;
 
@@ -25,9 +25,8 @@ export default function ChattingComp(currentChat:string){
                 id: socket.id,
                 email:curUser
             }).then(res => {
-                console.log(`connected with id: ${socket.id}`)
+                // console.log(`connected with id: ${socket.id}`)
             })
-            console.log(socket)
         })
 
     },[])  
@@ -53,7 +52,9 @@ export default function ChattingComp(currentChat:string){
         ])
         console.log(message)
         if (message != ""){
-            socket.emit('send-message', message, room)
+            // socket.emit('send-message', message, room)
+            console.log(curChatId)
+            socket.emit('send-message', message, curChatId)
         }
         initialId = initialId + 1;
         console.log(newMessage)

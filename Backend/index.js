@@ -85,7 +85,6 @@ app.post('/signUp', (req, res) => {
         }
         else if(result.length > 0)
         {
-            console.log(result)
             return res.json(result)
         }
         else
@@ -141,10 +140,8 @@ app.post('/AddFriend', (req, res) => {
 
 });
 app.post('/contacts', (req, res) => {
-    console.log("fire")
     const userFind = "SELECT * FROM friends WHERE myEmail = ?;"
     db.query(userFind,[req.body.email], (err, result) => {
-        console.log(result)
         if(err)
         {
             console.log(err)
@@ -182,8 +179,7 @@ app.post('/getName', (req, res) => {
 app.post('/getFriendReq', (req, res) => {
     const userFind = "SELECT * FROM friendreq WHERE toEmail = ?;"
     db.query(userFind,[req.body.email], (err, result) => {
-        console.log(result)
-        console.log(err)
+        
         if(err)
         {
             console.log(err)
@@ -243,8 +239,10 @@ app.post('/socketid', (req, res) => {
     db.query(userFind,[req.body.id, req.body.email], (err, result) => {
         if(err)
         {
-            console.log("wee")
             return res.status(404).json(err)
+        }
+        else{
+            return res.json(result)
         }
         
     })
@@ -256,7 +254,6 @@ app.post('/getFriendId', (req, res) => {
     db.query(userFind,[req.body.email], (err, result) => {
         if(err)
         {
-            console.log("wee")
             return res.status(404).json(err)
         }
         else{

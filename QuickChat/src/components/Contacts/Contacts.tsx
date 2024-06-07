@@ -9,7 +9,7 @@ import { MdAccountBox } from "react-icons/md";
 import { motion } from 'framer-motion';
 
 // import { curChat } from "../Chatting/chattingcomp";
-
+var curChatId = ""
 import ChattingComp from "../Chatting/chattingcomp";
 export default function Contacts(){
     const navigate = useNavigate(); 
@@ -45,8 +45,9 @@ export default function Contacts(){
          Axios.post("http://localhost:3000/getFriendId", {
                 email:value,
             }).then(res => {
-                console.log(res.data)
-            });
+                console.log(res.data[0].id)
+                curChatId = res.data[0].id
+        });
     }
     function LogOut(){
         navigate("/")
@@ -106,3 +107,5 @@ export default function Contacts(){
         </>
     );
 }
+
+export {curChatId};
