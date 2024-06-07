@@ -24,3 +24,6 @@ TRUNCATE TABLE friends;
 
 -- @block
 ALTER TABLE friends  DROP COLUMN username;
+
+-- @block
+ALTER TABLE users ADD COLUMN id VARCHAR(255);

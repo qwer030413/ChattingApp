@@ -138,18 +138,13 @@ app.post('/AddFriend', (req, res) => {
         }
         
     })         
-            
-        
-
-    
-    
-    
-
 
 });
 app.post('/contacts', (req, res) => {
+    console.log("fire")
     const userFind = "SELECT * FROM friends WHERE myEmail = ?;"
     db.query(userFind,[req.body.email], (err, result) => {
+        console.log(result)
         if(err)
         {
             console.log(err)
@@ -163,6 +158,7 @@ app.post('/contacts', (req, res) => {
         {
             return res.status(404).json(err)
         }
+        
     })
 });
 app.post('/getName', (req, res) => {
@@ -186,19 +182,21 @@ app.post('/getName', (req, res) => {
 app.post('/getFriendReq', (req, res) => {
     const userFind = "SELECT * FROM friendreq WHERE toEmail = ?;"
     db.query(userFind,[req.body.email], (err, result) => {
+        console.log(result)
+        console.log(err)
         if(err)
         {
             console.log(err)
             return res.status(404).json(err)
         }
-        else if(result.length > 0)
+        else
         {
             return res.json(result)
         }
-        else
-        {
-            return res.status(404).json(err)
-        }
+        // else
+        // {
+        //     return res.status(404).json(err)
+        // }
     })
 });
 
@@ -239,8 +237,35 @@ app.post('/AcceptFriend/:from/:to', (req, res) => {
     })
     
 })
-
-
+app.post('/socketid', (req, res) => {
+    const userFind = "UPDATE users SET id= ? WHERE email = ?;"
+   
+    db.query(userFind,[req.body.id, req.body.email], (err, result) => {
+        if(err)
+        {
+            console.log("wee")
+            return res.status(404).json(err)
+        }
+        
+    })
+    
+})
+app.post('/getFriendId', (req, res) => {
+    const userFind = "SELECT * FROM users WHERE email = ?;"
+   
+    db.query(userFind,[req.body.email], (err, result) => {
+        if(err)
+        {
+            console.log("wee")
+            return res.status(404).json(err)
+        }
+        else{
+            return res.json(result)
+        }
+        
+    })
+    
+})
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });

@@ -20,6 +20,7 @@ export default function Contacts(){
         Axios.post("http://localhost:3000/contacts", {
             email: curUser,
         }).then(res => {
+            console.log("working")
             for(let i = 0; i < res.data.length; i++)
             {
                 Axios.post("http://localhost:3000/getName", {
@@ -41,6 +42,11 @@ export default function Contacts(){
     function changeCurChat(value : string)
     {
         setCurContact(value)
+         Axios.post("http://localhost:3000/getFriendId", {
+                email:value,
+            }).then(res => {
+                console.log(res.data)
+            });
     }
     function LogOut(){
         navigate("/")

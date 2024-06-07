@@ -36,7 +36,10 @@ export default function FriendRequests(){
                 {email: res.data[i].fromEmail}
                 ]);
             }
-        })
+        }).catch(err => {
+            console.log(err)
+        
+        });
     }, [])
     function handleRemoveItem(email:string) {
         console.log(email)

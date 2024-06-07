@@ -2,11 +2,13 @@ import { useEffect, useState } from 'react';
 import './chatcomp.css'
 import { motion } from 'framer-motion';
 import * as io from 'socket.io-client'
+import Axios from 'axios'
+import { curUser } from '../login/Login';
+
 var curChat = ""
 var initialId = 0;
 
 export default function ChattingComp(currentChat:string){
-    let user = "Aditi"
     const [message, setMessage] = useState("");
     const [newMessage, setNewMessage] = useState([] as any)
     const [room, setRoom] = useState("")
@@ -16,12 +18,20 @@ export default function ChattingComp(currentChat:string){
         setCurChat(curChat)
     },[changeCurChat])
     
-        
-    socket.on('connect', () => {
-            // console.log(`connected with id: ${socket.id}`)
-            // console.log(socket)
+    useEffect(() => {
+        socket.on('connect', () => { 
+            
+            Axios.post("http://localhost:3000/socketid", {
+                id: socket.id,
+                email:curUser
+            }).then(res => {
+                console.log(`connected with id: ${socket.id}`)
+            })
+            console.log(socket)
         })
 
+    },[])  
+    
     
     function receiveMessage() {
         if (socket) {
