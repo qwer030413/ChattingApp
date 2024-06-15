@@ -19,8 +19,8 @@ const io = require('socket.io')(3001, {
     },
 })
 io.on('connection', socket =>{
-    // console.log(socket.id)
     socket.on('send-message', (message, room) => {
+        console.log(message)
         if(room == ""){
             socket.broadcast.emit('recieve-message', message)
         }
@@ -29,6 +29,7 @@ io.on('connection', socket =>{
             socket.to(room).emit('recieve-message', message)
         }
     })
+    
 })
 
 

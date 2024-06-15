@@ -9,17 +9,17 @@ var curChat = ""
 var initialId = 0;
 // const socket = io.connect("http://localhost:3001")
 export default function ChattingComp(currentChat:string){
-    const [message, setMessage] = useState("");
     const [newMessage, setNewMessage] = useState([] as any)
     const [room, setRoom] = useState("")
-    const socket = io("http://localhost:3001", {autoConnect: false})
+    const socket = io("http://localhost:3001"
+    // , {autoConnect: false}
+    )
     const[curChatUser, setCurChat] = useState("")
     useEffect(() => {
         setCurChat(curChat)
     },[changeCurChat])
     useEffect(() => {
         socket.connect()
-        
         return () => {
             console.log("disconnected")
             socket.disconnect();
@@ -27,7 +27,7 @@ export default function ChattingComp(currentChat:string){
     },[])
     useEffect(() => {
         socket.on('connect', () => { 
-            console.log(socket.id)
+            console.log("socket.id")
             Axios.post("http://localhost:3000/socketid", {
                 id: socket.id,
                 email:curUser
@@ -49,31 +49,23 @@ export default function ChattingComp(currentChat:string){
             })
         }
     }
-    useEffect(() => {
+    useEffect(() => { 
         receiveMessage();
     }, [socket]);
     function sendMessage(){
-        
+        var msg = (document.getElementById("ChatVal") as HTMLInputElement).value
         setNewMessage([
             ...newMessage,
-            {text: message, id: initialId + 1}
+            {text: msg, id: initialId + 1}
         ])
-        console.log(message)
-        if (message != ""){
+        if (msg != ""){
             // socket.emit('send-message', message, room)
             console.log(curChatId)
-            socket.emit('send-message', message, curChatId)
+            socket.emit('send-message', msg, curChatId)
         }
         initialId = initialId + 1;
         console.log(newMessage)
     }
-    // const socket = io('http://localhost:3001')
-    // socket.on('recieve-message', a => {
-    //     setNewMessage([
-    //         ...newMessage,
-    //         {text: a}
-    //     ])
-    // })
 
 
     return(
@@ -87,7 +79,7 @@ export default function ChattingComp(currentChat:string){
                 ))}
             </div>
             <div className="ChatBox">
-                <input id = "ChatVal"type='text' className='ChattingBox' onChange={(e) => setMessage(e.target.value)} placeholder='Message..'/>
+                <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..'/>
                 <input id = "room"type='text' className='ChattingBox' onChange={(e) => setRoom(e.target.value)} placeholder='room..'/>
                 <motion.button className="SendBtn"
                 onClick={() =>sendMessage()}
