@@ -27,3 +27,9 @@ ALTER TABLE friends  DROP COLUMN username;
 
 -- @block
 ALTER TABLE users ADD COLUMN id VARCHAR(255);
+-- @block
+CREATE TABLE Chats(
+    fromEmail VARCHAR(255) NOT NULL,
+    toEmail VARCHAR(255) NOT NULL,
+    chat VARCHAR(255) NOT NULL
+);

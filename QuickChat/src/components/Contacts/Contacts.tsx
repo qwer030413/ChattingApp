@@ -7,20 +7,21 @@ import Axios from 'axios'
 import { curUser } from "../login/Login";
 import { MdAccountBox } from "react-icons/md";
 import { motion } from 'framer-motion';
-
 // import { curChat } from "../Chatting/chattingcomp";
 var curChatId = ""
+var initialId = 0;
+
 import ChattingComp from "../Chatting/chattingcomp";
 export default function Contacts(){
     const navigate = useNavigate(); 
     const[contacts, setContacts] = new Set(useState([] as any))
+    const [Messages, setMessages] = useState([] as any)
     const[currentContact, setCurContact] = useState("")
     // const [name, setName] = useState("")
     useEffect(() => {
         Axios.post("http://localhost:3000/contacts", {
             email: curUser,
         }).then(res => {
-            console.log("working")
             for(let i = 0; i < res.data.length; i++)
             {
                 Axios.post("http://localhost:3000/getName", {
@@ -29,23 +30,38 @@ export default function Contacts(){
                     setContacts((a: any) => [...a,
                     {email: res.data[i].email, name: res1.data[0].username}
                     ]);
-                    // console.log(res1.data)
                 })
-                // setContacts((a: any) => [...a,
-                // {email: res.data[i].email, name: res1.data[i].username}
-                // ]);
             }
         })
         
         
     }, [])
+    useEffect(() => {
+        Axios.post("http://localhost:3000/DisplayMessages", {
+            fromEmail:curUser,
+            toEmail: currentContact,
+        }).then(res => {
+            setMessages([]);
+            for(let i = 0; i < res.data.length; i++)
+            {
+                setMessages((a: any) => [...a,
+                {text: res.data[i].chat, id: initialId + 1}
+                // {email: res.data[i].fromEmail}
+                ]);
+                initialId = initialId + 1;
+            }
+        }).catch(err => {
+            console.log(err)
+        
+        });
+
+    }, [currentContact])
     function changeCurChat(value : string)
     {
         setCurContact(value)
          Axios.post("http://localhost:3000/getFriendId", {
                 email:value,
             }).then(res => {
-                console.log(res.data[0].id)
                 curChatId = res.data[0].id
         });
     }
@@ -101,7 +117,7 @@ export default function Contacts(){
                 <button onClick={LogOut} className="logOutButton">Logout</button>
             </div>
         </div>
-            {ChattingComp(currentContact)}
+            {ChattingComp(currentContact, Messages)}
         </div>
         
         </>

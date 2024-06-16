@@ -8,9 +8,9 @@ import { curChatId } from '../Contacts/Contacts';
 var curChat = ""
 var initialId = 0;
 // const socket = io.connect("http://localhost:3001")
-export default function ChattingComp(currentChat:string){
-    const [newMessage, setNewMessage] = useState([] as any)
-    const [room, setRoom] = useState("")
+export default function ChattingComp(currentChat:string, newMessage: any){
+    // const [newMsg, setNewMessage] = useState([] as any)
+    const [newMsg, setNewMessage] = useState([] as any)
     const socket = io("http://localhost:3001"
     // , {autoConnect: false}
     )
@@ -19,13 +19,8 @@ export default function ChattingComp(currentChat:string){
         setCurChat(curChat)
     },[changeCurChat])
     useEffect(() => {
+        console.log(newMessage)
         socket.connect()
-        return () => {
-            console.log("disconnected")
-            socket.disconnect();
-        };
-    },[])
-    useEffect(() => {
         socket.on('connect', () => { 
             console.log("socket.id")
             Axios.post("http://localhost:3000/socketid", {
@@ -35,29 +30,72 @@ export default function ChattingComp(currentChat:string){
                 // console.log(`connected with id: ${socket.id}`)
             })
         })
+        // Axios.post("http://localhost:3000/DisplayMessages", {
+        //     fromEmail:curUser,
+        //     toEmail: currentChat,
+        // }).then(res => {
+        //     for(let i = 0; i < res.data.length; i++)
+        //     {
+        //         setNewMessage((a: any) => [...a,
+        //         {text: res.data[i].chat, id: initialId + 1}
+        //         // {email: res.data[i].fromEmail}
+        //         ]);
+        //         initialId = initialId + 1;
+        //     }
+        //     console.log(newMessage)
+        // }).catch(err => {
+        //     console.log(err)
+        
+        // });
+        return () => {
+            console.log("disconnected")
+            socket.disconnect();
+        };
+    },[])
 
-    },[])  
+
+    // Enter Key Event listenter weird
+    // useEffect(() => {
+    //     const handleEnter = (event: { key: string; }) => {
+    //        if (event.key === 'Enter') {
+    //         sendMessage()
+    //       }
+    //     };
+    //     window.addEventListener('keydown', handleEnter);
     
+    //     return () => {
+    //       window.removeEventListener('keydown', handleEnter);
+    //     };
+    //   }, []);
     
-    function receiveMessage() {
-        if (socket) {
-            socket.on('recieve-message', a => {
-                setNewMessage((prev: any) => [...prev, {
-                    text: a, id: initialId
-                }])
-                initialId = initialId + 1
-            })
-        }
-    }
-    useEffect(() => { 
-        receiveMessage();
-    }, [socket]);
+    // function receiveMessage() {
+    //     if (socket) {
+    //         socket.on('recieve-message', a => {
+    //             setNewMessage((prev: any) => [...prev, {
+    //                 text: a, id: initialId
+    //             }])
+    //             initialId = initialId + 1
+    //         })
+    //     }
+    // }
+    // useEffect(() => { 
+    //     receiveMessage();
+    // }, [socket]);
+
+
+
     function sendMessage(){
         var msg = (document.getElementById("ChatVal") as HTMLInputElement).value
         setNewMessage([
             ...newMessage,
             {text: msg, id: initialId + 1}
         ])
+        Axios.post("http://localhost:3000/StoreChats", {
+            fromEmail:curUser,
+            toEmail: currentChat, 
+            text: msg
+        }).then(res => {
+        })
         if (msg != ""){
             // socket.emit('send-message', message, room)
             console.log(curChatId)
@@ -80,7 +118,6 @@ export default function ChattingComp(currentChat:string){
             </div>
             <div className="ChatBox">
                 <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..'/>
-                <input id = "room"type='text' className='ChattingBox' onChange={(e) => setRoom(e.target.value)} placeholder='room..'/>
                 <motion.button className="SendBtn"
                 onClick={() =>sendMessage()}
                 >

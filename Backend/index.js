@@ -190,10 +190,6 @@ app.post('/getFriendReq', (req, res) => {
         {
             return res.json(result)
         }
-        // else
-        // {
-        //     return res.status(404).json(err)
-        // }
     })
 });
 
@@ -210,10 +206,6 @@ app.post('/deleteRequest', (req, res) => {
 });
 app.post('/AcceptFriend/:from/:to', (req, res) => {
     
-    // console.log(req.body.Email)
-    // if (!email){
-    //     res.status(418).send({message: "error!"})
-    // }
     const userFind = "SELECT * FROM users WHERE email = ?;"
     const request = "INSERT INTO friends(email, myEmail) VALUES (?,?);"
     db.query(request,[req.body.fromEmail,req.body.recieveEmail], (err, result) => {
@@ -258,6 +250,45 @@ app.post('/getFriendId', (req, res) => {
             return res.status(404).json(err)
         }
         else{
+            return res.json(result)
+        }
+        
+    })
+    
+})
+app.post('/StoreChats', (req, res) => {
+    // const userFind = "SELECT * FROM chats WHERE (fromEmail = ? AND toEmail = ? )OR (fromEmail = ? AND toEmail = ?);"
+    const request = "INSERT INTO chats(fromEmail, toEmail, chat) VALUES (?,?,?);"
+    db.query(request,[req.body.fromEmail, req.body.toEmail, req.body.text], (err, result) => {
+        if(err)
+        {
+            return res.status(404).json(err)
+        }
+        else{
+            return res.json(result)
+        }
+        
+    })
+    // db.query(userFind,[req.body.fromEmail, req.body.toEmail, req.body.toEmail, req.body.fromEmail], (err, result) => {
+    //     if(err)
+    //     {
+    //         return res.status(404).json(err)
+    //     }
+    //     else{
+    //         return res.json(result)
+    //     }
+        
+    // })
+    
+})
+app.post('/DisplayMessages', (req, res) => {
+    const userFind = "SELECT * FROM chats WHERE (fromEmail = ? AND toEmail = ? )OR (fromEmail = ? AND toEmail = ?);"
+    db.query(userFind,[req.body.fromEmail, req.body.toEmail, req.body.toEmail, req.body.fromEmail], (err, result) => {
+        if(err)
+        {
+            return res.status(404).json(err)
+        }
+        if(req.body.fromEmail != "" && req.body.fromEmail != ""){
             return res.json(result)
         }
         
