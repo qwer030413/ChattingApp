@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import './chatcomp.css'
 import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
@@ -9,10 +9,9 @@ var curChat = ""
 var initialId = 0;
 // const socket = io.connect("http://localhost:3001")
 export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any){
-    // const [newMsg, setNewMessage] = useState([] as any)
-    // const [newMsg, setNewMessage] = useState([] as any)
     // const socket = io("http://localhost:3001")
     var socket = io('http://localhost:3001', { transports : ['websocket'] });
+    const bottomScroll = useRef<HTMLDivElement>(null)
     const[curChatUser, setCurChat] = useState("")
     useEffect(() => {
         setCurChat(curChat)
@@ -21,7 +20,6 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         console.log(newMessage)
         socket.connect()
         socket.on('connect', () => { 
-            console.log("socket.id")
             Axios.post("http://localhost:3000/socketid", {
                 id: socket.id,
                 email:curUser
@@ -29,44 +27,29 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
                 // console.log(`connected with id: ${socket.id}`)
             })
         })
-        // Axios.post("http://localhost:3000/DisplayMessages", {
-        //     fromEmail:curUser,
-        //     toEmail: currentChat,
-        // }).then(res => {
-        //     for(let i = 0; i < res.data.length; i++)
-        //     {
-        //         setNewMessage((a: any) => [...a,
-        //         {text: res.data[i].chat, id: initialId + 1}
-        //         // {email: res.data[i].fromEmail}
-        //         ]);
-        //         initialId = initialId + 1;
-        //     }
-        //     console.log(newMessage)
-        // }).catch(err => {
-        //     console.log(err)
-        
-        // });
         return () => {
             console.log("disconnected")
             socket.disconnect();
         };
     },[])
 
+    //handling enter key
+    const checkKeyPress = useCallback((e) => {
+        const { key, keyCode } = e;
+        if (keyCode === 13) {
+        sendMessage()
+        }
+    },[newMessage]);
 
-    // Enter Key Event listenter weird
-    // useEffect(() => {
-    //     const handleEnter = (event: { key: string; }) => {
-    //        if (event.key === 'Enter') {
-    //         sendMessage()
-    //       }
-    //     };
-    //     window.addEventListener('keydown', handleEnter);
+    useEffect(() => {
+        window.addEventListener("keydown", checkKeyPress);
+        return () => {
+        window.removeEventListener("keydown", checkKeyPress);
+        };
+    }, [checkKeyPress]);
+ 
     
-    //     return () => {
-    //       window.removeEventListener('keydown', handleEnter);
-    //     };
-    //   }, []);
-    
+
     function receiveMessage() {
         if (socket) {
             socket.on('recieve-message', a => {
@@ -84,6 +67,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
 
 
     function sendMessage(){
+        console.log(newMessage)
         var msg = (document.getElementById("ChatVal") as HTMLInputElement).value
         setNewMessage([
             ...newMessage,
@@ -96,16 +80,18 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         }).then(res => {
         })
         if (msg != ""){
-            console.log("emited")
-            // socket.emit('send-message', message, room)
             console.log(curChatId)
             socket.emit('send-message', msg, curChatId)
         }
         initialId = initialId + 1;
-        console.log(newMessage)
     }
 
 
+    useEffect(() => {
+        if(bottomScroll.current){
+            bottomScroll.current.scrollIntoView();
+        }
+    }, [sendMessage])
     return(
          <div className="ChattingContent">
             <div className="Title">
@@ -115,6 +101,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
                 {newMessage.map((msg:any, i:any) => (
                     <h1 key = {i}>{msg.text}</h1>
                 ))}
+                <div ref = {bottomScroll}></div>
             </div>
             <div className="ChatBox">
                 <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..'/>
