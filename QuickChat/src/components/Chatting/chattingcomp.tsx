@@ -8,12 +8,11 @@ import { curChatId } from '../Contacts/Contacts';
 var curChat = ""
 var initialId = 0;
 // const socket = io.connect("http://localhost:3001")
-export default function ChattingComp(currentChat:string, newMessage: any){
+export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any){
     // const [newMsg, setNewMessage] = useState([] as any)
-    const [newMsg, setNewMessage] = useState([] as any)
-    const socket = io("http://localhost:3001"
-    // , {autoConnect: false}
-    )
+    // const [newMsg, setNewMessage] = useState([] as any)
+    // const socket = io("http://localhost:3001")
+    var socket = io('http://localhost:3001', { transports : ['websocket'] });
     const[curChatUser, setCurChat] = useState("")
     useEffect(() => {
         setCurChat(curChat)
@@ -68,19 +67,19 @@ export default function ChattingComp(currentChat:string, newMessage: any){
     //     };
     //   }, []);
     
-    // function receiveMessage() {
-    //     if (socket) {
-    //         socket.on('recieve-message', a => {
-    //             setNewMessage((prev: any) => [...prev, {
-    //                 text: a, id: initialId
-    //             }])
-    //             initialId = initialId + 1
-    //         })
-    //     }
-    // }
-    // useEffect(() => { 
-    //     receiveMessage();
-    // }, [socket]);
+    function receiveMessage() {
+        if (socket) {
+            socket.on('recieve-message', a => {
+                setNewMessage((prev: any) => [...prev, {
+                    text: a, id: initialId
+                }])
+                initialId = initialId + 1
+            })
+        }
+    }
+    useEffect(() => { 
+        receiveMessage();
+    }, [socket]);
 
 
 
@@ -97,6 +96,7 @@ export default function ChattingComp(currentChat:string, newMessage: any){
         }).then(res => {
         })
         if (msg != ""){
+            console.log("emited")
             // socket.emit('send-message', message, room)
             console.log(curChatId)
             socket.emit('send-message', msg, curChatId)

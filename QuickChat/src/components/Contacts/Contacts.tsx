@@ -117,7 +117,7 @@ export default function Contacts(){
                 <button onClick={LogOut} className="logOutButton">Logout</button>
             </div>
         </div>
-            {ChattingComp(currentContact, Messages)}
+            {ChattingComp(currentContact, Messages, setMessages)}
         </div>
         
         </>
