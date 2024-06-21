@@ -15,6 +15,7 @@ export default function LoginComp(){
         (document.getElementById("pwval") as HTMLInputElement).value.trim() != '')
         {
             event.preventDefault();
+            // {Email: tempEmail, Password: tempPassword    }
             Axios.post("http://localhost:3000/login", {
                 Email: tempEmail,
                 Password: tempPassword,

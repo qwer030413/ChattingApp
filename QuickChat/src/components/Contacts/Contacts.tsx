@@ -45,8 +45,8 @@ export default function Contacts(){
             for(let i = 0; i < res.data.length; i++)
             {
                 setMessages((a: any) => [...a,
-                {text: res.data[i].chat, id: initialId + 1}
-                // {email: res.data[i].fromEmail}
+                // {text: res.data[i].chat, id: initialId + 1} 
+                {email: res.data[i].fromEmail, text: res.data[i].chat, id: initialId + 1}
                 ]);
                 initialId = initialId + 1;
             }
@@ -59,6 +59,7 @@ export default function Contacts(){
     function changeCurChat(value : string)
     {
         setCurContact(value)
+        console.log(currentContact)
          Axios.post("http://localhost:3000/getFriendId", {
                 email:value,
             }).then(res => {

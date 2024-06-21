@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import './chatcomp.css'
-import { motion } from 'framer-motion';
 import { io } from 'socket.io-client';
 import Axios from 'axios'
 import { curUser } from '../login/Login';
 import { curChatId } from '../Contacts/Contacts';
+import { motion } from 'framer-motion';
+import chatMsgs from './chatMessages';
 var curChat = ""
 var initialId = 0;
-// const socket = io.connect("http://localhost:3001")
 export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any){
     // const socket = io("http://localhost:3001")
     var socket = io('http://localhost:3001', { transports : ['websocket'] });
@@ -35,7 +35,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
 
     //handling enter key
     const checkKeyPress = useCallback((e) => {
-        const { key, keyCode } = e;
+        const {keyCode } = e;
         if (keyCode === 13) {
         sendMessage()
         }
@@ -51,10 +51,11 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     
 
     function receiveMessage() {
+        console.log(curChatUser)
         if (socket) {
             socket.on('recieve-message', a => {
                 setNewMessage((prev: any) => [...prev, {
-                    text: a, id: initialId
+                    email: curChat, text: a, id: initialId
                 }])
                 initialId = initialId + 1
             })
@@ -71,7 +72,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         var msg = (document.getElementById("ChatVal") as HTMLInputElement).value
         setNewMessage([
             ...newMessage,
-            {text: msg, id: initialId + 1}
+            {email: curUser, text: msg, id: initialId + 1}
         ])
         Axios.post("http://localhost:3000/StoreChats", {
             fromEmail:curUser,
@@ -93,23 +94,37 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         }
     }, [sendMessage])
     return(
+         
          <div className="ChattingContent">
-            <div className="Title">
-                {currentChat}
-            </div>
-            <div className='chatPlace'>
-                {newMessage.map((msg:any, i:any) => (
-                    <h1 key = {i}>{msg.text}</h1>
-                ))}
-                <div ref = {bottomScroll}></div>
-            </div>
-            <div className="ChatBox">
-                <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..'/>
-                <motion.button className="SendBtn"
-                onClick={() =>sendMessage()}
-                >
-                Send</motion.button>
-            </div>
+            {(currentChat.trim() != ''?
+            (<>
+                <div className="Title">
+                    {currentChat}
+                </div>
+                <div className='chatPlace'>
+                    {newMessage.map((msg:any, i:any) => (
+                        // <h1 key = {i}>{msg.text}</h1>
+                        chatMsgs(msg.text, msg.email, i)
+                    ))}
+                    <div ref = {bottomScroll}></div>
+                </div>
+                <div className="ChatBox">
+                    <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..'/>
+                    <motion.button className="SendBtn"
+                    onClick={() =>sendMessage()}
+                    >
+                    Send</motion.button>
+                </div>
+            
+            </>
+            ):
+            (
+            <>
+                    
+            </>
+            )
+            
+            )}
             
         </div>
     );
