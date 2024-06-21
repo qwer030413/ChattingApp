@@ -7,10 +7,10 @@ import Axios from 'axios'
 import { curUser } from "../login/Login";
 import { MdAccountBox } from "react-icons/md";
 import { motion } from 'framer-motion';
+import { changeCurContact } from "../Chatting/chattingcomp";
 // import { curChat } from "../Chatting/chattingcomp";
 var curChatId = ""
 var initialId = 0;
-
 import ChattingComp from "../Chatting/chattingcomp";
 export default function Contacts(){
     const navigate = useNavigate(); 
@@ -59,7 +59,8 @@ export default function Contacts(){
     function changeCurChat(value : string)
     {
         setCurContact(value)
-        console.log(currentContact)
+        changeCurContact(value)
+        // console.log(currentContact)
          Axios.post("http://localhost:3000/getFriendId", {
                 email:value,
             }).then(res => {
@@ -81,7 +82,6 @@ export default function Contacts(){
         textShadow: "0px 0px 8px rgb(255, 255, 255)",
         
     }
-    
     return(
         <>
         <div className="WholeChatPage">

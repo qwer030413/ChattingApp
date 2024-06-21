@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback } from 'react';
 import './chatcomp.css'
 import { io } from 'socket.io-client';
 import Axios from 'axios'
@@ -11,11 +11,7 @@ var initialId = 0;
 export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any){
     // const socket = io("http://localhost:3001")
     var socket = io('http://localhost:3001', { transports : ['websocket'] });
-    const bottomScroll = useRef<HTMLDivElement>(null)
-    const[curChatUser, setCurChat] = useState("")
-    useEffect(() => {
-        setCurChat(curChat)
-    },[changeCurChat])
+    const bottomScroll = useRef<HTMLDivElement>(null)    
     useEffect(() => {
         console.log(newMessage)
         socket.connect()
@@ -34,7 +30,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     },[])
 
     //handling enter key
-    const checkKeyPress = useCallback((e) => {
+    const checkKeyPress = useCallback((e: { keyCode: any; }) => {
         const {keyCode } = e;
         if (keyCode === 13) {
         sendMessage()
@@ -49,9 +45,8 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     }, [checkKeyPress]);
  
     
-
     function receiveMessage() {
-        console.log(curChatUser)
+        
         if (socket) {
             socket.on('recieve-message', a => {
                 setNewMessage((prev: any) => [...prev, {
@@ -68,12 +63,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
 
 
     function sendMessage(){
-        console.log(newMessage)
         var msg = (document.getElementById("ChatVal") as HTMLInputElement).value
-        setNewMessage([
-            ...newMessage,
-            {email: curUser, text: msg, id: initialId + 1}
-        ])
         Axios.post("http://localhost:3000/StoreChats", {
             fromEmail:curUser,
             toEmail: currentChat, 
@@ -81,8 +71,14 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         }).then(res => {
         })
         if (msg != ""){
-            console.log(curChatId)
+             setNewMessage([
+                ...newMessage,
+                {email: curUser, text: msg, id: initialId + 1}
+            ])
             socket.emit('send-message', msg, curChatId)
+            if( document.getElementById("ChatVal")){
+                (document.getElementById("ChatVal") as HTMLInputElement).value = ""
+            }
         }
         initialId = initialId + 1;
     }
@@ -109,7 +105,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
                     <div ref = {bottomScroll}></div>
                 </div>
                 <div className="ChatBox">
-                    <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..'/>
+                    <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..' />
                     <motion.button className="SendBtn"
                     onClick={() =>sendMessage()}
                     >
@@ -130,9 +126,8 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     );
 }
 
-export function changeCurChat(email:string)
+export function changeCurContact(email:string)
 {
     curChat = email
-    console.log(email)
 }
 export {curChat}

@@ -52,11 +52,13 @@
     height: 100%;
 }
 .ChatMsg{
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     display: flex;
     flex-direction: column;
     padding: 12px;
 }
 .userName{
+    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
     display: flex;
     justify-content: start;
     font-weight: bold;
