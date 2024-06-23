@@ -1,4 +1,4 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef, useCallback, useState } from 'react';
 import './chatcomp.css'
 import { io } from 'socket.io-client';
 import Axios from 'axios'
@@ -8,7 +8,7 @@ import { motion } from 'framer-motion';
 import chatMsgs from './chatMessages';
 var curChat = ""
 var initialId = 0;
-export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any){
+export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any, curUserName:string){
     // const socket = io("http://localhost:3001")
     var socket = io('http://localhost:3001', { transports : ['websocket'] });
     const bottomScroll = useRef<HTMLDivElement>(null)    
@@ -43,8 +43,15 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         window.removeEventListener("keydown", checkKeyPress);
         };
     }, [checkKeyPress]);
- 
     
+    // useEffect(() => {
+    //     Axios.post("http://localhost:3000/getUserName", {
+    //         email: currentChat
+    //     }).then(res => {
+    //         setCurUserName(res.data[0].username)
+    //     })
+    // }, [currentChat])
+
     function receiveMessage() {
         
         if (socket) {
@@ -95,7 +102,14 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
             {(currentChat.trim() != ''?
             (<>
                 <div className="Title">
-                    {currentChat}
+                    <div className='EmailOfUser'>
+                        {currentChat}
+                    </div>
+                    <div className='line'></div>
+                    <div className='NameOfUser'>
+                        {curUserName}
+                    </div>
+                    {/* {currentChat} */}
                 </div>
                 <div className='chatPlace'>
                     {newMessage.map((msg:any, i:any) => (

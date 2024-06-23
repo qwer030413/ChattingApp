@@ -50,27 +50,26 @@ io.on('connection', socket =>{
 
 app.post('/friendReq/:from/:to', (req, res) => {
     
-    // console.log(req.body.Email)
-    // if (!email){
-    //     res.status(418).send({message: "error!"})
-    // }
-    
     const request = "INSERT INTO friendreq(fromEmail, toEmail) VALUES (?,?);"
+    const userfind = "SELECT * FROM users WHERE email = ?;"
     db.query(request,[req.body.myEmail, req.body.Email,], (err, result) => {
-        if(err)
-        {
-            console.log("wee")
-            return res.status(404).json(err)
-        }
-        else
-        {
-            res.send({
-                myEmail: req.body.myEmail,
-                toEmail: req.body.Email,
-                
-            })
-            // return res.json(result)
-        }
+        db.query(userfind,[req.body.Email,],(err2, result2) => {
+            if(err || err2)
+            {
+                return res.status(404).json(err)
+            }
+            else if(result2.length > 0)
+            {
+                res.send({
+                    myEmail: req.body.myEmail,
+                    toEmail: req.body.Email,
+                    
+                })
+            }
+            else{
+                return res.status(404).json(err)
+            }
+        })
     })
     
 })
@@ -108,6 +107,7 @@ app.post('/login', (req, res) => {
         }
         else if(result.length > 0)
         {
+            console.log(result)
             return res.json(result)
         }
         else
@@ -141,7 +141,7 @@ app.post('/AddFriend', (req, res) => {
 
 });
 app.post('/contacts', (req, res) => {
-    const userFind = "SELECT * FROM friends WHERE myEmail = ?;"
+    const userFind = "SELECT DISTINCT email FROM friends WHERE myEmail = ?;"
     db.query(userFind,[req.body.email], (err, result) => {
         if(err)
         {
@@ -186,6 +186,7 @@ app.post('/getFriendReq', (req, res) => {
             console.log(err)
             return res.status(404).json(err)
         }
+        
         else
         {
             return res.json(result)
@@ -295,13 +296,20 @@ app.post('/DisplayMessages', (req, res) => {
     })
     
 })
+app.post('/getUserName', (req, res) => {
+    const userFind = "SELECT * FROM users WHERE email = ?;"
+    db.query(userFind,[req.body.email], (err, result) => {
+        if(result.length > 0){
+            return res.json(result)
+        }
+        else{
+            return res.status(404).json(err)
+        }
+        
+    })
+    
+})
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });
 
-// app.all("/api/*", function(req, res, next) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
-//   res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
-//   return next();
-// });

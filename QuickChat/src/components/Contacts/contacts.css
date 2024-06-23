@@ -41,12 +41,20 @@
     background-color: rgb(111, 111, 167);
 }
 .UserProfile{
-    height: 50px;
+    max-height: 50px;
     align-items: center;
     justify-content: start;
     padding: 10px;
     display: flex;
     gap:1rem;
+    
+}
+.ShowProfile{
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: row;
+    max-height: 20px;
+    overflow: hidden;
 }
 .logOutButton{
     display: flex;

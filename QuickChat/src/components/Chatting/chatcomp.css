@@ -7,13 +7,35 @@
     height: 100%;
 }
 .Title{
+    font-family: 'Outfit';
     background-color: rgb(39, 39, 61);
     width: 100%;
-    height: 50px;
+    height: 60px;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
     display: flex;
 }
+.EmailOfUser{
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+}
+.line{
+    width: 2px;
+    height: 30px;
+    background-color: white;
+    opacity: 0.5;
+    margin-right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.NameOfUser{
+    color: white;
+    padding: 20px;
+    font-size: 20px;
+}
+
 .chatPlace{
     width: 100%;
     height: 90%;
@@ -52,15 +74,30 @@
     height: 100%;
 }
 .ChatMsg{
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Outfit';
     display: flex;
     flex-direction: column;
     padding: 12px;
 }
 .userName{
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: 'Outfit';
     display: flex;
     justify-content: start;
-    font-weight: bold;
-    font-size: 25px;
+    font-weight:400;
+    font-size: 22px;
+}
+.message{
+    font-family: 'Outfit';
+    font-size: 18px;
+    height: 30px;
+    width: max-content;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: #1e1ec6;
+    border-radius: 10px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
 }

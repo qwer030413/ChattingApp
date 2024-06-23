@@ -17,6 +17,7 @@ export default function Contacts(){
     const[contacts, setContacts] = new Set(useState([] as any))
     const [Messages, setMessages] = useState([] as any)
     const[currentContact, setCurContact] = useState("")
+    const [curUserName, setCurUserName] = useState("")
     // const [name, setName] = useState("")
     useEffect(() => {
         Axios.post("http://localhost:3000/contacts", {
@@ -55,6 +56,13 @@ export default function Contacts(){
         
         });
 
+    }, [currentContact])
+    useEffect(() => {
+        Axios.post("http://localhost:3000/getUserName", {
+            email: currentContact
+        }).then(res => {
+            setCurUserName(res.data[0].username)
+        })
     }, [currentContact])
     function changeCurChat(value : string)
     {
@@ -112,13 +120,13 @@ export default function Contacts(){
             <div className='accountProfile'>
                 <div className="UserProfile">
                     <span className="pfpPlaceHolder"></span>
-                    <text>welcome {curUser}</text>
+                    <text className="ShowProfile">{curUser}</text>
                 </div>
                 
                 <button onClick={LogOut} className="logOutButton">Logout</button>
             </div>
         </div>
-            {ChattingComp(currentContact, Messages, setMessages)}
+            {ChattingComp(currentContact, Messages, setMessages, curUserName)}
         </div>
         
         </>
