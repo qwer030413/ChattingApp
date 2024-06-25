@@ -309,6 +309,19 @@ app.post('/getUserName', (req, res) => {
     })
     
 })
+app.post('/SetPFP', (req, res) => {
+    const userFind = "UPDATE users SET PFP= ? WHERE email = ?;"
+    db.query(userFind,[req.body.src, req.body.email], (err, result) => {
+        if(err){
+            return res.status(404).json(err)
+        }
+        else{
+             return res.json(result)
+        }
+        
+    })
+    
+})
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });

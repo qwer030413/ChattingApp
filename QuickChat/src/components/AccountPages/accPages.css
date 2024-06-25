@@ -1,0 +1,16 @@
+
+
+.profilePageContainer{
+    width: 100%;
+    height: 90%;
+    background-color: #090911;
+    border-radius: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.pline{
+    width: 5px;
+    height: 25px;
+    background-color: rgb(37, 57, 241);
+}

@@ -1,6 +1,6 @@
-import { curUser } from "../components/login/Login";
 import ChatNavBar from "../components/chatNav/chatNavBar";
-
+import "./pages.css"
+import AccountProfile from "../components/AccountNavBar/accountProfile";
 
 
 
@@ -11,8 +11,9 @@ export default function Accounts(){
         <div className="ChatContainer">
             <ChatNavBar />
             <div className="AccountContainer">
-                <h1>My Account</h1>
-                <h1>Email: {curUser}</h1>
+                <AccountProfile />
+                {/* <h1>My Account</h1>
+                <h1>Email: {curUser}</h1> */}
             </div>
             
         </div>  

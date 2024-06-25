@@ -47,7 +47,7 @@ export default function SearchBox(){
         <div className='SearchBoxContainer'>
             <input id = "emailOfUser"type='text' className='SearchBox' onChange={(e) => setSearch(e.target.value)} placeholder='User Email..'/>
             <span>
-                <div className='line'></div>
+                <div className='sline'></div>
                 <BsSearch className='SearchIcon'onClick={() =>SearchUser()}/>
             </span>
             

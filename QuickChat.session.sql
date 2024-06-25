@@ -33,3 +33,7 @@ CREATE TABLE Chats(
     toEmail VARCHAR(255) NOT NULL,
     chat VARCHAR(255) NOT NULL
 );
+
+
+-- @block
+ALTER TABLE users ADD COLUMN PFP VARCHAR(255);

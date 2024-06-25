@@ -52,13 +52,13 @@
   
     
 }
-.hi{
-    display: flex;
-    position: relative;
-    padding: 15px;
-    
-    
-}
+    .hi{
+        display: flex;
+        position: relative;
+        padding: 15px;
+        
+        
+    }
 .highlight{
     position: relative;
     cursor: pointer;

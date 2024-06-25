@@ -7,7 +7,7 @@ import FriendRequests from './friendRequest';
 
 
 
-let totalHistorySec = 0;
+// let totalHistorySec = 0;
 let minitabs = [
     {
         label:"Add friends",
@@ -89,4 +89,4 @@ export default function MiniTab(): ReactElement{
     );
 }
 
-export {totalHistorySec}
+// export {totalHistorySec}
