@@ -3,6 +3,9 @@ const app = express();
 const mysql = require('mysql2')
 const bodyParser = require('body-parser')
 const cors = require('cors')
+const multer = require('multer');
+const path = require('path')
+
 const db = mysql.createPool({
     host: "localhost",
     user: 'root',
@@ -12,6 +15,7 @@ const db = mysql.createPool({
 app.use(cors())
 app.use(express.json())
 app.use(bodyParser.urlencoded({extended:true}))
+app.use(express.static('images'))
 const io = require('socket.io')(3001, {
     cors: {
         origin: ['http://localhost:5173'],
@@ -309,19 +313,53 @@ app.post('/getUserName', (req, res) => {
     })
     
 })
-app.post('/SetPFP', (req, res) => {
-    const userFind = "UPDATE users SET PFP= ? WHERE email = ?;"
-    db.query(userFind,[req.body.src, req.body.email], (err, result) => {
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, './images')
+    },
+    filename: (req, file, cb) => {
+        cb(null, file.fieldname + "_" + Date.now() + path.extname(file.originalname))
+    }
+})
+const upload = multer({
+    storage: storage
+})
+
+
+
+app.post('/SetPFP', upload.single('image'), (req, res) => {
+    const userFind = "UPDATE users SET PFP = ? WHERE email = ?;"
+    // console.log(req.file)
+    // console.log(req.body.email)
+    db.query(userFind,[req.file.filename, req.body.email], (err, result) => {
+        console.log(result)
         if(err){
             return res.status(404).json(err)
         }
         else{
-             return res.json(result)
+             return res.json(req.file.filename)
         }
         
     })
     
 })
+app.post('/getPFP', (req, res) => {
+    const userFind = "SELECT * FROM users WHERE email = ?;"
+    db.query(userFind,[req.body.email], (err, result) => {
+    if(result.length > 0){
+        return res.json(result)
+    }
+    else{
+        return res.status(404).json(err)
+    }
+    
+})
+})
+
+
+
+
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });

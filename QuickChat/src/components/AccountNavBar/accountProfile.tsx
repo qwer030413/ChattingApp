@@ -6,14 +6,23 @@ import ProfilePage from "../AccountPages/ProfilePage";
 import pic from './DefaultPFP.jpg'
 import { curUser } from "../login/Login";
 import Axios from 'axios'
-import {motion, useAnimationControls } from "framer-motion";
+import {motion} from "framer-motion";
 
 export default function AccountProfile(){
 
     const [pfp, setpfp] = useState<File | null>(null);
+    const [url, setUrl] = useState("")
+    //  const [pfp, setpfp] = useState()
     const inputRef = useRef<any>(null);    
     const [tabs, setTabs] = useState(1);
     useEffect(() => {
+        Axios.post("http://localhost:3000/getPFP", {
+                email: curUser
+            }).then(res => {
+                setUrl(res.data[0].PFP)
+            }).catch(err => {
+                console.log(err)
+            })
     }, [])
     let minitabs = [
         {
@@ -33,14 +42,14 @@ export default function AccountProfile(){
     const fileSelected = (event: any) => {
         if (event.target.files.length > 0){
             setpfp(event.target.files[0])
+            const formdata = new FormData();
+            formdata.append('image', event.target.files[0]);
+            formdata.append('email',curUser)
             console.log(event.target.files[0])
-            Axios.post("http://localhost:3000/SetPFP", {
-            src: event.target.files[0],
-            email: curUser
-            }).then(res => {
-                console.log("worked")
+            Axios.post("http://localhost:3000/SetPFP",formdata)
+            .then(res =>{
+                setUrl(res.data)
             })
-            
         }
         
     }
@@ -53,8 +62,8 @@ export default function AccountProfile(){
         <div className="AccountProfile">
             <div className="AccountNav">
             
-            <img onClick = {handleImageClick}src={pfp === null ? pic : URL.createObjectURL(pfp)} alt="" className="profilePic"/>
-            <input type="file" onChange={fileSelected} className="Upload" ref={inputRef}></input>
+            <img onClick = {handleImageClick}src={url === null ? pic : 'http://localhost:3000/' + url} alt="" className="profilePic"/>
+            <input name="image" type="file" onChange={fileSelected} className="Upload" ref={inputRef}></input>
             <text className="AccountName">{curUser}</text>
             <div className="horizontalLine"></div>
             <div className='accountsTab'>
