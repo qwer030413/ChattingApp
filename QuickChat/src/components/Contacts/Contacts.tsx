@@ -5,9 +5,9 @@ import { setCurUser } from "../login/Login";
 import { useEffect, useState } from "react";
 import Axios from 'axios'
 import { curUser } from "../login/Login";
-import { MdAccountBox } from "react-icons/md";
 import { motion } from 'framer-motion';
 import { changeCurContact } from "../Chatting/chattingcomp";
+import pic from '../AccountNavBar/DefaultPFP.jpg'
 // import { curChat } from "../Chatting/chattingcomp";
 var curChatId = ""
 var initialId = 0;
@@ -18,18 +18,22 @@ export default function Contacts(){
     const [Messages, setMessages] = useState([] as any)
     const[currentContact, setCurContact] = useState("")
     const [curUserName, setCurUserName] = useState("")
+    const [curPFP, setCurPFP] = useState("")
     // const [name, setName] = useState("")
     useEffect(() => {
         Axios.post("http://localhost:3000/contacts", {
             email: curUser,
         }).then(res => {
+            console.log(res)
             for(let i = 0; i < res.data.length; i++)
             {
                 Axios.post("http://localhost:3000/getName", {
                     email: res.data[i].email,
                 }).then(res1 => {
+                    // console.log(res1.data[0].PFP)
                     setContacts((a: any) => [...a,
-                    {email: res.data[i].email, name: res1.data[0].username}
+                    {email: res.data[i].email, name: res1.data[0].username, pfp: res1.data[0].PFP}
+                    
                     ]);
                 })
             }
@@ -42,7 +46,8 @@ export default function Contacts(){
             fromEmail:curUser,
             toEmail: currentContact,
         }).then(res => {
-            setMessages([]);
+            //this is needed to reset the array everytime we change chats dont delete it T_T
+            setMessages([]); 
             for(let i = 0; i < res.data.length; i++)
             {
                 setMessages((a: any) => [...a,
@@ -64,6 +69,13 @@ export default function Contacts(){
             setCurUserName(res.data[0].username)
         })
     }, [currentContact])
+    useEffect(() => {
+        Axios.post("http://localhost:3000/getCurUserPFP", {
+            email: curUser
+        }).then(res => {
+            setCurPFP(res.data[0].PFP)
+        })
+    }, [])
     function changeCurChat(value : string)
     {
         setCurContact(value)
@@ -104,7 +116,8 @@ export default function Contacts(){
                         transition={spring}
 
                         >
-                            <MdAccountBox className='picPlaceHolder'/>
+                            {/* <MdAccountBox className='picPlaceHolder'/> */}
+                            <img src = {cont.pfp === null ? pic : 'http://localhost:3000/' + cont.pfp} className="ContactPFP"/>
 
                             <div className='contactInfo'>
                                 <text className="contactName">{cont.name}</text>
@@ -119,14 +132,15 @@ export default function Contacts(){
             </div>
             <div className='accountProfile'>
                 <div className="UserProfile">
-                    <span className="pfpPlaceHolder"></span>
+                    {/* <span className="pfpPlaceHolder"></span> */}
+                    <img src = {curPFP === null ? pic : 'http://localhost:3000/' + curPFP} className="pfpPlaceHolder"/>
                     <text className="ShowProfile">{curUser}</text>
                 </div>
                 
                 <button onClick={LogOut} className="logOutButton">Logout</button>
             </div>
         </div>
-            {ChattingComp(currentContact, Messages, setMessages, curUserName)}
+            {ChattingComp(currentContact, Messages, setMessages, curUserName, curPFP)}
         </div>
         
         </>

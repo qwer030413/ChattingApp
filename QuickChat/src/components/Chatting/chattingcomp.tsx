@@ -6,12 +6,14 @@ import { curUser } from '../login/Login';
 import { curChatId } from '../Contacts/Contacts';
 import { motion } from 'framer-motion';
 import chatMsgs from './chatMessages';
+import pic from '../AccountNavBar/DefaultPFP.jpg'
 var curChat = ""
 var initialId = 0;
-export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any, curUserName:string){
+export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any, curUserName:string, curProfilePic:string){
     // const socket = io("http://localhost:3001")
     var socket = io('http://localhost:3001', { transports : ['websocket'] });
     const bottomScroll = useRef<HTMLDivElement>(null)    
+    const [curChatPFP, setCurChatPFP] = useState("")
     useEffect(() => {
         console.log(newMessage)
         socket.connect()
@@ -28,6 +30,15 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
             socket.disconnect();
         };
     },[])
+
+    useEffect(() => {
+        Axios.post("http://localhost:3000/getChatPFP", {
+            email: currentChat
+        }).then(res => {
+            setCurChatPFP(res.data[0].PFP)
+            console.log(curChatPFP)
+        })
+    }, [currentChat])
 
     //handling enter key
     const checkKeyPress = useCallback((e: { keyCode: any; }) => {
@@ -102,6 +113,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
             {(currentChat.trim() != ''?
             (<>
                 <div className="Title">
+                <img src = {curChatPFP === null ? pic : 'http://localhost:3000/' + curChatPFP} className="chatTopPFP"/>
                     <div className='EmailOfUser'>
                         {currentChat}
                     </div>
@@ -114,7 +126,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
                 <div className='chatPlace'>
                     {newMessage.map((msg:any, i:any) => (
                         // <h1 key = {i}>{msg.text}</h1>
-                        chatMsgs(msg.text, msg.email, i)
+                        chatMsgs(msg.text, msg.email, i, curProfilePic, curChatPFP)
                     ))}
                     <div ref = {bottomScroll}></div>
                 </div>

@@ -11,8 +11,8 @@ export default function ChatNavBar(){
 
     const spring = {
         type: "spring",
-        damping: 12,
-        stiffness: 500,
+        damping: 42,
+        stiffness: 700,
     }
     const hover = {
         scale: 1.15,

@@ -146,6 +146,7 @@ app.post('/AddFriend', (req, res) => {
 });
 app.post('/contacts', (req, res) => {
     const userFind = "SELECT DISTINCT email FROM friends WHERE myEmail = ?;"
+    
     db.query(userFind,[req.body.email], (err, result) => {
         if(err)
         {
@@ -330,10 +331,8 @@ const upload = multer({
 
 app.post('/SetPFP', upload.single('image'), (req, res) => {
     const userFind = "UPDATE users SET PFP = ? WHERE email = ?;"
-    // console.log(req.file)
-    // console.log(req.body.email)
+    
     db.query(userFind,[req.file.filename, req.body.email], (err, result) => {
-        console.log(result)
         if(err){
             return res.status(404).json(err)
         }
@@ -347,18 +346,40 @@ app.post('/SetPFP', upload.single('image'), (req, res) => {
 app.post('/getPFP', (req, res) => {
     const userFind = "SELECT * FROM users WHERE email = ?;"
     db.query(userFind,[req.body.email], (err, result) => {
-    if(result.length > 0){
-        return res.json(result)
-    }
-    else{
-        return res.status(404).json(err)
-    }
-    
+        if(result.length > 0){
+            return res.json(result)
+        }
+        else{
+            return res.status(404).json(err)
+        }
+        
+    })
 })
+
+app.post('/getCurUserPFP', (req, res) => {
+    const userFind = "SELECT * FROM users WHERE email = ?;"
+    db.query(userFind,[req.body.email], (err, result) => {
+        if(result.length > 0){
+            return res.json(result)
+        }
+        else{
+            return res.status(404).json(err)
+        }
+        
+    })
 })
-
-
-
+app.post('/getChatPFP', (req, res) => {
+    const userFind = "SELECT * FROM users WHERE email = ?;"
+    db.query(userFind,[req.body.email], (err, result) => {
+        if(result.length > 0){
+            return res.json(result)
+        }
+        else{
+            return res.status(404).json(err)
+        }
+        
+    })
+})
 
 app.listen(3000, () =>{
     console.log("running on port 3000")

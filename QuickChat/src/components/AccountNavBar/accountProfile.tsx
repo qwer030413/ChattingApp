@@ -10,7 +10,6 @@ import {motion} from "framer-motion";
 
 export default function AccountProfile(){
 
-    const [pfp, setpfp] = useState<File | null>(null);
     const [url, setUrl] = useState("")
     //  const [pfp, setpfp] = useState()
     const inputRef = useRef<any>(null);    
@@ -41,11 +40,9 @@ export default function AccountProfile(){
     }
     const fileSelected = (event: any) => {
         if (event.target.files.length > 0){
-            setpfp(event.target.files[0])
             const formdata = new FormData();
             formdata.append('image', event.target.files[0]);
             formdata.append('email',curUser)
-            console.log(event.target.files[0])
             Axios.post("http://localhost:3000/SetPFP",formdata)
             .then(res =>{
                 setUrl(res.data)

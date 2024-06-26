@@ -35,10 +35,16 @@
     /* gap: 1rem; */
 }
 .pfpPlaceHolder{
-    width: 40px;
     height: 40px;
-    border-radius: 20px;
-    background-color: rgb(111, 111, 167);
+    width: 40px;
+    display: block;
+    border-style: solid;
+    object-fit:cover;
+    border-radius: 50%;
+    border: 13px rgb(255, 255, 255);  
+    cursor: pointer;
+    overflow: 'hidden';
+    /* padding: 10px; */
 }
 .UserProfile{
     max-height: 50px;
@@ -106,4 +112,19 @@
     width: 100%;
     align-items: center;
     z-index: 10;
+}
+.ContactPFP{
+    height: 45px;
+    width: 45px;
+    display: block;
+    border-style: solid;
+    object-fit:cover;
+    border-radius: 50%;
+    border: 13px rgb(255, 255, 255);  
+    cursor: pointer;
+    overflow: 'hidden';
+    padding: 10px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
 }
