@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import './contacts.css'
-import { setCurUser } from "../login/Login";
+import { curName, setCurUser } from "../login/Login";
 import { useEffect, useState } from "react";
 import Axios from 'axios'
 import { curUser } from "../login/Login";
@@ -134,7 +134,7 @@ export default function Contacts(){
                 <div className="UserProfile">
                     {/* <span className="pfpPlaceHolder"></span> */}
                     <img src = {curPFP === null ? pic : 'http://localhost:3000/' + curPFP} className="pfpPlaceHolder"/>
-                    <text className="ShowProfile">{curUser}</text>
+                    <text className="ShowProfile">{curName}</text>
                 </div>
                 
                 <button onClick={LogOut} className="logOutButton">Logout</button>

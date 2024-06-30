@@ -6,6 +6,7 @@ import Axios from 'axios'
 import toast from "react-hot-toast";
 import { useState } from 'react';
 var curUser = ""
+var curName = ""
 export default function LoginComp(){
     const navigate = useNavigate(); 
     const [tempEmail, setEmail] = useState("")
@@ -24,6 +25,7 @@ export default function LoginComp(){
                 navigate("/chatHome")
                 console.log(res.data[0].email)
                 curUser = res.data[0].email
+                curName = res.data[0].username
             }).catch(err => {
                 console.log(err)
                 toast.error("Account Does not Exist!", {id:"logindne!"});
@@ -58,4 +60,4 @@ export default function LoginComp(){
 export function setCurUser(user:string){
     curUser = user
 }
-export {curUser}
+export {curUser, curName}

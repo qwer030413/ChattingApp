@@ -2,7 +2,7 @@ import { useEffect, useRef, useCallback, useState } from 'react';
 import './chatcomp.css'
 import { io } from 'socket.io-client';
 import Axios from 'axios'
-import { curUser } from '../login/Login';
+import { curUser, curName } from '../login/Login';
 import { curChatId } from '../Contacts/Contacts';
 import { motion } from 'framer-motion';
 import chatMsgs from './chatMessages';

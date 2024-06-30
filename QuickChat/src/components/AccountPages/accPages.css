@@ -11,6 +11,32 @@
 
 .pline{
     width: 5px;
-    height: 25px;
+    height: 30px;
     background-color: rgb(37, 57, 241);
+}
+
+.ProfileBody{
+    display: flex;
+    flex-direction: row;
+    padding-left: 35px;
+}
+
+.Section{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    width: 50%;
+    /* height: 100%; */
+}
+.ChangeUsername{
+    /* padding: 10px; */
+    background-color: #090911;
+    border:solid;
+    color:white;
+    opacity: 1;
+    border-radius: 10px;
+    border-color: #0f0f1d;
+    outline: none;
+    width: 100%;
 }
