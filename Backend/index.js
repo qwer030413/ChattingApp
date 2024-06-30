@@ -380,7 +380,32 @@ app.post('/getChatPFP', (req, res) => {
         
     })
 })
+app.post('/saveBio', (req, res) => {
+    const userFind = "UPDATE users SET Bio = ? WHERE email = ?;"
+    db.query(userFind,[req.body.aboutMe, req.body.email], (err, result) => {
+        if(err){
+            return res.status(404).json(err)
+            
+        }
+        else{
+            return res.json(result)
+        }
+        
+    })
+})
 
+app.post('/changeName', (req, res) => {
+    const userFind = "UPDATE users SET username = ? WHERE email = ?;"
+    db.query(userFind,[req.body.newName, req.body.email], (err, result) => {
+        if(err){
+            return res.status(404).json(err)
+        }
+        else{
+            return res.json(result)
+        }
+        
+    })
+})
 app.listen(3000, () =>{
     console.log("running on port 3000")
 });

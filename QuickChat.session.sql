@@ -36,4 +36,6 @@ CREATE TABLE Chats(
 
 
 -- @block
-ALTER TABLE users ADD COLUMN PFP VARCHAR(255);
+
+-- @block
+ALTER TABLE users ADD COLUMN Bio VARCHAR(255);
