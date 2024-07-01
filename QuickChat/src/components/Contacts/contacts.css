@@ -83,7 +83,7 @@
     justify-content: start;
     align-items: center;
     background-color: rgb(27, 27, 39);
-    border-radius: 10px;
+    /* border-radius: 10px; */
     cursor: pointer;
 }
 .contactInfo{

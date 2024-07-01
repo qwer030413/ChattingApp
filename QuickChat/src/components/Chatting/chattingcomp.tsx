@@ -7,6 +7,7 @@ import { curChatId } from '../Contacts/Contacts';
 import { motion } from 'framer-motion';
 import chatMsgs from './chatMessages';
 import pic from '../AccountNavBar/DefaultPFP.jpg'
+import ChatProfilePop from '../Popups/ChatProfilePop';
 var curChat = ""
 var initialId = 0;
 export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any, curUserName:string, curProfilePic:string){
@@ -14,6 +15,8 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     var socket = io('http://localhost:3001', { transports : ['websocket'] });
     const bottomScroll = useRef<HTMLDivElement>(null)    
     const [curChatPFP, setCurChatPFP] = useState("")
+    const[showPop, setShowPop] = useState(false)
+    const [userBio, setUserBio] = useState("")
     useEffect(() => {
         console.log(newMessage)
         socket.connect()
@@ -36,8 +39,10 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
             email: currentChat
         }).then(res => {
             setCurChatPFP(res.data[0].PFP)
+            setUserBio(res.data[0].Bio)
             console.log(curChatPFP)
         })
+        setShowPop(false)
     }, [currentChat])
 
     //handling enter key
@@ -107,13 +112,23 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
             bottomScroll.current.scrollIntoView();
         }
     }, [sendMessage])
+
+    function showPopUp(){
+        if(showPop){
+            setShowPop(false)
+        }
+        else{
+            setShowPop(true)
+        }
+    }
     return(
          
          <div className="ChattingContent">
             {(currentChat.trim() != ''?
             (<>
+                {ChatProfilePop(showPop, setShowPop, curChatPFP, currentChat, curUserName, userBio)}
                 <div className="Title">
-                <img src = {curChatPFP === null ? pic : 'http://localhost:3000/' + curChatPFP} className="chatTopPFP"/>
+                    <img src = {curChatPFP === null ? pic : 'http://localhost:3000/' + curChatPFP} className="chatTopPFP" onClick={showPopUp}/>
                     <div className='EmailOfUser'>
                         {currentChat}
                     </div>
@@ -123,6 +138,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
                     </div>
                     {/* {currentChat} */}
                 </div>
+                {/* {ChatProfilePop(showPop, setShowPop)} */}
                 <div className='chatPlace'>
                     {newMessage.map((msg:any, i:any) => (
                         // <h1 key = {i}>{msg.text}</h1>
@@ -132,19 +148,17 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
                 </div>
                 <div className="ChatBox">
                     <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..' />
-                    <motion.button className="SendBtn"
+                    <motion.button 
+                    className="SendBtn"
                     onClick={() =>sendMessage()}
+                    
                     >
                     Send</motion.button>
                 </div>
             
             </>
             ):
-            (
-            <>
-                    
-            </>
-            )
+            ("")
             
             )}
             

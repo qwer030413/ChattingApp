@@ -1,10 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import './contacts.css'
-import { curName, setCurUser } from "../login/Login";
+import { curName, setCurUser, curUser } from "../login/Login";
 import { useEffect, useState } from "react";
 import Axios from 'axios'
-import { curUser } from "../login/Login";
 import { motion } from 'framer-motion';
 import { changeCurContact } from "../Chatting/chattingcomp";
 import pic from '../AccountNavBar/DefaultPFP.jpg'
@@ -131,7 +130,7 @@ export default function Contacts(){
                     ))}
             </div>
             <div className='accountProfile'>
-                <div className="UserProfile">
+                <div className="UserProfile" >
                     {/* <span className="pfpPlaceHolder"></span> */}
                     <img src = {curPFP === null ? pic : 'http://localhost:3000/' + curPFP} className="pfpPlaceHolder"/>
                     <text className="ShowProfile">{curName}</text>

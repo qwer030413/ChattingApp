@@ -106,6 +106,7 @@
     border-radius: 50%;
     overflow: 'hidden';
     padding: 10px;
+    cursor: pointer;
 }
 .userName{
     font-family: 'Outfit';
