@@ -40,7 +40,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     },[])
 
     useEffect(() => {
-        Axios.post("http://localhost:3000/getChatPFP", {
+        Axios.post("http://localhost:3000/chats/getChatPFP", {
             email: currentChat
         }).then(res => {
             setCurChatPFP(res.data[0].PFP)
@@ -91,7 +91,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
 
     function sendMessage(){
         var msg = (document.getElementById("ChatVal") as HTMLInputElement).value
-        Axios.post("http://localhost:3000/StoreChats", {
+        Axios.post("http://localhost:3000/chats/StoreChats", {
             fromEmail:curUser,
             toEmail: currentChat, 
             text: msg,

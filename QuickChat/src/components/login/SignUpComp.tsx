@@ -43,7 +43,7 @@ export default function SignUpContainer(){
                 
                 setEmail(Email);
                 setPassword(Password);
-                Axios.post("http://localhost:3000/signUp", {
+                Axios.post("http://localhost:3000/users/signUp", {
                     newEmail: Email,
                     newPassword: Password,
                     newName: Name

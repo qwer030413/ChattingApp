@@ -27,7 +27,7 @@ export default function FriendRequests(){
         
     }
     useEffect(() => {
-        Axios.post("http://localhost:3000/getFriendReq", {
+        Axios.post("http://localhost:3000/users/getFriendReq", {
             email: curUser,
         }).then(res => {
             for(let i = 0; i < res.data.length; i++)
@@ -44,7 +44,7 @@ export default function FriendRequests(){
     function handleRemoveItem(email:string) {
         console.log(email)
         setRequests(requests.filter((item: { email: string; }) => item.email !== email))
-        Axios.post("http://localhost:3000/deleteRequest", {
+        Axios.post("http://localhost:3000/users/deleteRequest", {
                 
             recieveEmail: curUser,
             fromEmail: email
@@ -54,13 +54,13 @@ export default function FriendRequests(){
     function AcceptFriend(email:string) {
         console.log(email)
         setRequests(requests.filter((item: { email: string; }) => item.email !== email))
-        Axios.post("http://localhost:3000/AddFriend", {
+        Axios.post("http://localhost:3000/users/AddFriend", {
                 
             myEmail: curUser,
             Email: email
 
         });
-        Axios.post("http://localhost:3000/deleteRequest", {
+        Axios.post("http://localhost:3000/users/deleteRequest", {
                 
             recieveEmail: curUser,
             fromEmail: email

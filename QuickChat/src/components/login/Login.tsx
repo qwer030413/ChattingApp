@@ -18,7 +18,7 @@ export default function LoginComp(){
         {
             event.preventDefault();
             // {Email: tempEmail, Password: tempPassword    }
-            Axios.post("http://localhost:3000/login", {
+            Axios.post("http://localhost:3000/users/login", {
                 Email: tempEmail,
                 Password: tempPassword,
             }).then(res => {

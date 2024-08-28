@@ -19,14 +19,15 @@ export default function Contacts(){
     const [curUserName, setCurUserName] = useState("")
     const [curPFP, setCurPFP] = useState("")
     const [update, setUpdate] = useState(false)
+    const [search, setSearch] = useState('')
     // const [name, setName] = useState("")
     useEffect(() => {
-        Axios.post("http://localhost:3000/contacts", {
+        Axios.post("http://localhost:3000/users/contacts", {
             email: curUser,
         }).then(res => {
             for(let i = 0; i < res.data.length; i++)
             {
-                Axios.post("http://localhost:3000/getName", {
+                Axios.post("http://localhost:3000/users/getName", {
                     email: res.data[i].email,
                 }).then(res1 => {
                     // console.log(res1.data[0].PFP)
@@ -66,7 +67,7 @@ export default function Contacts(){
 
     }, [update])
     useEffect(() => {
-        Axios.post("http://localhost:3000/DisplayMessages", {
+        Axios.post("http://localhost:3000/chats/DisplayMessages", {
             fromEmail:curUser,
             toEmail: currentContact,
         }).then(res => {
@@ -87,14 +88,14 @@ export default function Contacts(){
 
     }, [currentContact])
     useEffect(() => {
-        Axios.post("http://localhost:3000/getUserName", {
+        Axios.post("http://localhost:3000/chats/getUserName", {
             email: currentContact
         }).then(res => {
             setCurUserName(res.data[0].username)
         })
     }, [currentContact])
     useEffect(() => {
-        Axios.post("http://localhost:3000/getCurUserPFP", {
+        Axios.post("http://localhost:3000/account/getCurUserPFP", { 
             email: curUser
         }).then(res => {
             setCurPFP(res.data[0].PFP)
@@ -105,7 +106,7 @@ export default function Contacts(){
         setCurContact(value)
         changeCurContact(value)
         // console.log(currentContact)
-         Axios.post("http://localhost:3000/getFriendId", {
+         Axios.post("http://localhost:3000/users/getFriendId", {
                 email:value,
             }).then(res => {
                 curChatId = res.data[0].id
@@ -131,7 +132,7 @@ export default function Contacts(){
         <div className="WholeChatPage">
             <div className="contactBar">
                 <div className="ChatsSearch">
-                    <input type="text" className="ChatsSearchBar" placeholder="Search For Chats"/>
+                    <input type="text" className="ChatsSearchBar" placeholder="Search For Chats" onChange={(e) => setSearch(e.target.value)}/>
                 </div>
                 <div className="ChatsHeader">
                     <text style={{fontWeight:'bold'}}>Chats</text>

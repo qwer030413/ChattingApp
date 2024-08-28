@@ -24,7 +24,7 @@ export default function SearchBox(){
                 //     toast.error("Account Does not Exist!", {id:"friendDNE!"});
                 
                 // });
-                Axios.post(`http://localhost:3000/friendReq/${curUser}/${search}`, {
+                Axios.post(`http://localhost:3000/users/friendReq/${curUser}/${search}`, {
                     Email: search,
                     myEmail: curUser,
                 }).then(res => {

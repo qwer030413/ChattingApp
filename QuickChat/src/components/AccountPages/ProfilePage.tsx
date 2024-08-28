@@ -15,7 +15,7 @@ export default function ProfilePage(){
     }, [])
     function saveProfileChanges(){
         if(name != ""){
-            Axios.post("http://localhost:3000/changeName", {
+            Axios.post("http://localhost:3000/account/changeName", {
                 email: curUser,
                 newName: name
             }).then(res => {
@@ -26,7 +26,7 @@ export default function ProfilePage(){
                 console.log(err)
             })
         }
-        Axios.post("http://localhost:3000/saveBio", {
+        Axios.post("http://localhost:3000/account/saveBio", {
                 email: curUser,
                 aboutMe: bio
             }).then(res => {
