@@ -39,3 +39,8 @@ CREATE TABLE Chats(
 
 -- @block
 ALTER TABLE users ADD COLUMN Bio VARCHAR(255);
+
+-- @block
+ALTER TABLE friends ADD COLUMN activity VARCHAR(255);
+-- @block
+ALTER TABLE chats  DROP COLUMN activity;

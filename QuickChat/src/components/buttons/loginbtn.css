@@ -1,7 +1,9 @@
 .LoginBtn{
     font-size: 20px;
     width: 70%;
+    padding: 10px;
     background-color: rgb(0, 0, 71);
+    padding: 10px;
 }
 .getstarted{
     width: 60%;

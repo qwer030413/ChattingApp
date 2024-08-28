@@ -8,6 +8,8 @@ import { motion } from 'framer-motion';
 import chatMsgs from './chatMessages';
 import pic from '../AccountNavBar/DefaultPFP.jpg'
 import ChatProfilePop from '../Popups/ChatProfilePop';
+import { IoSend } from "react-icons/io5";
+
 var curChat = ""
 var initialId = 0;
 export default function ChattingComp(currentChat:string, newMessage: any, setNewMessage:any, curUserName:string, curProfilePic:string){
@@ -17,8 +19,11 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     const [curChatPFP, setCurChatPFP] = useState("")
     const[showPop, setShowPop] = useState(false)
     const [userBio, setUserBio] = useState("")
+    const date = new Date();
+    const showTime = date.getHours() 
+        + ':' + date.getMinutes() 
+        + ":" + date.getSeconds();
     useEffect(() => {
-        console.log(newMessage)
         socket.connect()
         socket.on('connect', () => { 
             Axios.post("http://localhost:3000/socketid", {
@@ -40,7 +45,6 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         }).then(res => {
             setCurChatPFP(res.data[0].PFP)
             setUserBio(res.data[0].Bio)
-            console.log(curChatPFP)
         })
         setShowPop(false)
     }, [currentChat])
@@ -90,8 +94,16 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         Axios.post("http://localhost:3000/StoreChats", {
             fromEmail:curUser,
             toEmail: currentChat, 
-            text: msg
+            text: msg,
         }).then(res => {
+
+        })
+        Axios.post("http://localhost:3000/StoreContactActivity", {
+            myEmail:curUser,
+            email: currentChat, 
+            activity: showTime,
+        }).then(res => {
+            
         })
         if (msg != ""){
              setNewMessage([
@@ -148,12 +160,11 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
                 </div>
                 <div className="ChatBox">
                     <input id = "ChatVal"type='text' className='ChattingBox' placeholder='Message..' />
-                    <motion.button 
-                    className="SendBtn"
-                    onClick={() =>sendMessage()}
+                    <motion.div className='SendBtn' onClick={() => sendMessage()}>
+                        <IoSend />
+
                     
-                    >
-                    Send</motion.button>
+                    </motion.div>
                 </div>
             
             </>

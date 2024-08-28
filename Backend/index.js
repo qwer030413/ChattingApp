@@ -145,7 +145,7 @@ app.post('/AddFriend', (req, res) => {
 
 });
 app.post('/contacts', (req, res) => {
-    const userFind = "SELECT DISTINCT email FROM friends WHERE myEmail = ?;"
+    const userFind = "SELECT DISTINCT email, activity FROM friends WHERE myEmail = ?;"
     
     db.query(userFind,[req.body.email], (err, result) => {
         if(err)
@@ -397,6 +397,18 @@ app.post('/saveBio', (req, res) => {
 app.post('/changeName', (req, res) => {
     const userFind = "UPDATE users SET username = ? WHERE email = ?;"
     db.query(userFind,[req.body.newName, req.body.email], (err, result) => {
+        if(err){
+            return res.status(404).json(err)
+        }
+        else{
+            return res.json(result)
+        }
+        
+    })
+})
+app.post('/StoreContactActivity', (req, res) => {
+    const userFind = "UPDATE friends SET activity = ? WHERE myEmail = ? AND email = ?;"
+    db.query(userFind,[req.body.activity, req.body.myEmail, req.body.email], (err, result) => {
         if(err){
             return res.status(404).json(err)
         }
