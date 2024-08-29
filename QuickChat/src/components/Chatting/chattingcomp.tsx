@@ -98,13 +98,13 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         }).then(res => {
 
         })
-        Axios.post("http://localhost:3000/StoreContactActivity", {
-            myEmail:curUser,
-            email: currentChat, 
-            activity: showTime,
-        }).then(res => {
+        // Axios.post("http://localhost:3000/StoreContactActivity", {
+        //     myEmail:curUser,
+        //     email: currentChat, 
+        //     activity: showTime,
+        // }).then(res => {
             
-        })
+        // })
         if (msg != ""){
              setNewMessage([
                 ...newMessage,

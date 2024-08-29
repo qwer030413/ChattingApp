@@ -8,6 +8,7 @@ const path = require('path')
 const userRoute = require('./Routes/Users')
 const chatRoute = require('./Routes/Chats')
 const AccRoute = require('./Routes/Account')
+
 const db = mysql.createPool({
     host: "localhost",
     user: 'root',

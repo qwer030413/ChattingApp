@@ -18,7 +18,7 @@ export default function Contacts(){
     const[currentContact, setCurContact] = useState("")
     const [curUserName, setCurUserName] = useState("")
     const [curPFP, setCurPFP] = useState("")
-    const [update, setUpdate] = useState(false)
+    // const [update, setUpdate] = useState(false)
     const [search, setSearch] = useState('')
     // const [name, setName] = useState("")
     useEffect(() => {
@@ -46,7 +46,7 @@ export default function Contacts(){
         const {keyCode } = e;
         if (keyCode === 13) {
             console.log('press')
-            setUpdate(update => !update)
+            // setUpdate(update => !update)
         }
     },[]);
     useEffect(() => {
@@ -55,17 +55,17 @@ export default function Contacts(){
         window.removeEventListener("keydown", checkKeyPress);
         };
     }, [checkKeyPress]);
-    useEffect(() => {
-        contacts.sort((a: any, b: any) => 
-        {if (a.activity < b.activity)
-            return 1
+    // useEffect(() => {
+    //     contacts.sort((a: any, b: any) => 
+    //     {if (a.activity < b.activity)
+    //         return 1
 
-        if (a.activity > b.activity)
-            return -1
+    //     if (a.activity > b.activity)
+    //         return -1
 
-        return 0});
+    //     return 0});
 
-    }, [update])
+    // }, [update])
     useEffect(() => {
         Axios.post("http://localhost:3000/chats/DisplayMessages", {
             fromEmail:curUser,
