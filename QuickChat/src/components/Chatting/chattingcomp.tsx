@@ -19,6 +19,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     const [curChatPFP, setCurChatPFP] = useState("")
     const[showPop, setShowPop] = useState(false)
     const [userBio, setUserBio] = useState("")
+    const [search, setSearch] = useState('')
     const date = new Date();
     const showTime = date.getHours() 
         + ':' + date.getMinutes() 
@@ -64,13 +65,6 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         };
     }, [checkKeyPress]);
     
-    // useEffect(() => {
-    //     Axios.post("http://localhost:3000/getUserName", {
-    //         email: currentChat
-    //     }).then(res => {
-    //         setCurUserName(res.data[0].username)
-    //     })
-    // }, [currentChat])
 
     function receiveMessage() {
         
@@ -91,24 +85,32 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
 
     function sendMessage(){
         var msg = (document.getElementById("ChatVal") as HTMLInputElement).value
-        Axios.post("http://localhost:3000/chats/StoreChats", {
-            fromEmail:curUser,
-            toEmail: currentChat, 
-            text: msg,
-        }).then(res => {
+        let time = new Date()
+        // time.setHours(0, 0, 0, 0);
+        // const strDateLA = time.toLocaleString("en-US", {
+        //     timeZone: "America/Los_Angeles",
+        // });
+        // const offset = (new Date(strDateLA) - time) / (1000 * 60 * 60);
 
-        })
         // Axios.post("http://localhost:3000/StoreContactActivity", {
         //     myEmail:curUser,
         //     email: currentChat, 
         //     activity: showTime,
-        // }).then(res => {
+        // }).then(res => { 
             
         // })
         if (msg != ""){
+            Axios.post("http://localhost:3000/chats/StoreChats", {
+                fromEmail:curUser,
+                toEmail: currentChat, 
+                text: msg,
+                time: time.toString()
+            }).then(res => {
+
+            })
              setNewMessage([
                 ...newMessage,
-                {email: curUser, text: msg, id: initialId + 1}
+                {email: curUser, text: msg, id: initialId + 1, time:time}
             ])
             socket.emit('send-message', msg, curChatId)
             if( document.getElementById("ChatVal")){
@@ -128,33 +130,40 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     function showPopUp(){
         if(showPop){
             setShowPop(false)
-        }
+        } 
         else{
             setShowPop(true)
         }
     }
     return(
          
-         <div className="ChattingContent">
-            {(currentChat.trim() != ''?
+         <div className="ChattingContent"> 
+            {(currentChat.trim() != ''? 
             (<>
                 {ChatProfilePop(showPop, setShowPop, curChatPFP, currentChat, curUserName, userBio)}
                 <div className="Title">
-                    <img src = {curChatPFP === null ? pic : 'http://localhost:3000/' + curChatPFP} className="chatTopPFP" onClick={showPopUp}/>
-                    <div className='EmailOfUser'>
-                        {currentChat}
+                    <div className='TitleSection'>
+                        <img src = {curChatPFP === null ? pic : 'http://localhost:3000/' + curChatPFP} className="chatTopPFP" onClick={showPopUp}/>
+                        <div className='EmailOfUser'>
+                            {currentChat}
+                        </div>
+                        <div className='line'></div>
+                        <div className='NameOfUser'>
+                            {curUserName}
+                        </div>
                     </div>
-                    <div className='line'></div>
-                    <div className='NameOfUser'>
-                        {curUserName}
+                    <div className="messageSearch"> 
+                        <input type="text" className="messageSearchBar" placeholder="Search For Chats (username)" onChange={(e) => setSearch(e.target.value)}/>
                     </div>
                     {/* {currentChat} */}
                 </div>
                 {/* {ChatProfilePop(showPop, setShowPop)} */}
                 <div className='chatPlace'>
-                    {newMessage.map((msg:any, i:any) => (
+                    {newMessage.filter((msg: any) => {
+                        return search.toLowerCase() === ''? msg: msg.text.toLowerCase().includes(search)
+                    }).map((msg:any, i:any) => (
                         // <h1 key = {i}>{msg.text}</h1>
-                        chatMsgs(msg.text, msg.email, i, curProfilePic, curChatPFP)
+                        chatMsgs(msg.text, msg.email, i, curProfilePic, curChatPFP, msg.time)
                     ))}
                     <div ref = {bottomScroll}></div>
                 </div>

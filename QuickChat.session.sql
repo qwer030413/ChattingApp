@@ -44,3 +44,6 @@ ALTER TABLE users ADD COLUMN Bio VARCHAR(255);
 ALTER TABLE friends ADD COLUMN activity VARCHAR(255);
 -- @block
 ALTER TABLE chats  DROP COLUMN activity;
+
+-- @block
+ALTER TABLE chats ADD COLUMN time VARCHAR(255);

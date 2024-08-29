@@ -7,19 +7,7 @@ const db = mysql.createPool({
     password: 'qwer',
     database: 'chattingapp',
 });
-router.post('/getPFP', (req, res) => {
-    const userFind = "SELECT * FROM users WHERE email = ?;"
-    db.query(userFind,[req.body.email], (err, result) => {
-        if(result.length > 0){
-            return res.json(result)
-        }
-        else{
-            return res.status(404).json(err)
-        }
-        
-    })
-})
-router.post('/getCurUserPFP', (req, res) => {
+router.post('/getAccount', (req, res) => {
     const userFind = "SELECT * FROM users WHERE email = ?;"
     db.query(userFind,[req.body.email], (err, result) => {
         if(result.length > 0){
@@ -56,5 +44,29 @@ router.post('/changeName', (req, res) => {
         
     })
 })
-
+router.post('/changeName', (req, res) => {
+    const userFind = "SELECT * FROM users WHERE email = ?;"
+    db.query(userFind,[req.body.newName, req.body.email], (err, result) => {
+        if(err){
+            return res.status(404).json(err)
+        }
+        else{
+            return res.json(result)
+        }
+        
+    })
+})
+router.post('/changePassword', (req, res) => {
+    const userFind = "UPDATE users SET pw = ? WHERE email = ?;"
+    db.query(userFind,[req.body.newPw, req.body.email], (err, result) => {
+        if(err){
+            return res.status(404).json(err)
+            
+        }
+        else{
+            return res.json(result)
+        }
+        
+    })
+})
 module.exports = router;

@@ -77,7 +77,7 @@ export default function Contacts(){
             {
                 setMessages((a: any) => [...a,
                 // {text: res.data[i].chat, id: initialId + 1} 
-                {email: res.data[i].fromEmail, text: res.data[i].chat, id: initialId + 1}
+                {email: res.data[i].fromEmail, text: res.data[i].chat, id: initialId + 1, time: res.data[i].time}
                 ]);
                 initialId = initialId + 1;
             }
@@ -95,7 +95,7 @@ export default function Contacts(){
         })
     }, [currentContact])
     useEffect(() => {
-        Axios.post("http://localhost:3000/account/getCurUserPFP", { 
+        Axios.post("http://localhost:3000/account/getAccount", { 
             email: curUser
         }).then(res => {
             setCurPFP(res.data[0].PFP)
@@ -132,13 +132,15 @@ export default function Contacts(){
         <div className="WholeChatPage">
             <div className="contactBar">
                 <div className="ChatsSearch">
-                    <input type="text" className="ChatsSearchBar" placeholder="Search For Chats" onChange={(e) => setSearch(e.target.value)}/>
+                    <input type="text" className="ChatsSearchBar" placeholder="Search For Chats (username)" onChange={(e) => setSearch(e.target.value)}/>
                 </div>
                 <div className="ChatsHeader">
                     <text style={{fontWeight:'bold'}}>Chats</text>
                 </div>
                 <div className="Contacts">
-                    {contacts.map((cont:any, i:any) => (
+                    {contacts.filter((cont: any) => {
+                        return search.toLowerCase() === ''? cont: cont.name.toLowerCase().includes(search)
+                    }).map((cont:any, i:any) => (
                         <>
                             <motion.div key={i} className='contactBoxes' 
                             onClick={() => changeCurChat(cont.email)}

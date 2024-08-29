@@ -1,6 +1,8 @@
 
 .ChatProfilePop{
     position: fixed;
+    /* top:-50%;
+    right: -50%; */
     width: 23%;
     height: 80%;
     margin-top: 2.05%;
@@ -16,15 +18,17 @@
 }
 
 .popupPFP{
-   
-    min-width: 150px;
-    max-width: 150px;
-    min-height: 150px;
-    max-height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
+    height: 150px;
+    width: 150px;
     display: block;
-    clip-path: circle();
+    border-style: solid;
+    object-fit:cover;
+    border-radius: 35%;
+    border: 5px rgb(255, 255, 255);  
+    cursor: pointer;
+    overflow: 'hidden';
+    padding: 10px;
+
 }
 .closeButton{
     cursor: pointer;

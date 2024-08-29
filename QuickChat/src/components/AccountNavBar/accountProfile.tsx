@@ -15,7 +15,7 @@ export default function AccountProfile(){
     const inputRef = useRef<any>(null);    
     const [tabs, setTabs] = useState(1);
     useEffect(() => {
-        Axios.post("http://localhost:3000/account/getPFP", {
+        Axios.post("http://localhost:3000/account/getAccount", {
                 email: curUser
             }).then(res => {
                 setUrl(res.data[0].PFP)

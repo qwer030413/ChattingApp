@@ -36,8 +36,8 @@ router.post('/getUserName', (req, res) => {
     
 })
 router.post('/StoreChats', (req, res) => {
-    const request = "INSERT INTO chats(fromEmail, toEmail, chat) VALUES (?,?,?);"
-    db.query(request,[req.body.fromEmail, req.body.toEmail, req.body.text], (err, result) => {
+    const request = "INSERT INTO chats(fromEmail, toEmail, chat, time) VALUES (?,?,?,?);"
+    db.query(request,[req.body.fromEmail, req.body.toEmail, req.body.text, req.body.time], (err, result) => {
         if(err)
         {
             return res.status(404).json(err)
