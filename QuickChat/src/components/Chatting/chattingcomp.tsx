@@ -9,6 +9,7 @@ import chatMsgs from './chatMessages';
 import pic from '../AccountNavBar/DefaultPFP.jpg'
 import ChatProfilePop from '../Popups/ChatProfilePop';
 import { IoSend } from "react-icons/io5";
+import toast from 'react-hot-toast';
 
 var curChat = ""
 var initialId = 0;
@@ -20,10 +21,11 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     const[showPop, setShowPop] = useState(false)
     const [userBio, setUserBio] = useState("")
     const [search, setSearch] = useState('')
+    const [msgCount, setMsgCount] = useState(0)
     const date = new Date();
-    const showTime = date.getHours() 
-        + ':' + date.getMinutes() 
-        + ":" + date.getSeconds();
+    // const showTime = date.getHours() 
+    //     + ':' + date.getMinutes() 
+    //     + ":" + date.getSeconds();
     useEffect(() => {
         socket.connect()
         socket.on('connect', () => { 
@@ -49,6 +51,17 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         })
         setShowPop(false)
     }, [currentChat])
+
+    // Use the useEffect hook to set up the timer
+    useEffect(() => {
+        const interval = setInterval(() => {
+            console.log('hi')
+            setMsgCount(msgCount => msgCount = 0)
+        }, 5000)
+
+        // Clean up the interval when the component unmounts
+        return () => clearInterval(interval)
+    }, [])
 
     //handling enter key
     const checkKeyPress = useCallback((e: { keyCode: any; }) => {
@@ -99,14 +112,14 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
         // }).then(res => { 
             
         // })
-        if (msg != ""){
+        if (msg != "" && msgCount < 15){
             Axios.post("http://localhost:3000/chats/StoreChats", {
                 fromEmail:curUser,
                 toEmail: currentChat, 
                 text: msg,
                 time: time.toString()
             }).then(res => {
-
+                setMsgCount(msgCount => msgCount + 1)
             })
              setNewMessage([
                 ...newMessage,
@@ -116,6 +129,9 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
             if( document.getElementById("ChatVal")){
                 (document.getElementById("ChatVal") as HTMLInputElement).value = ""
             }
+        }
+        else{
+            toast.error("Too Many Messages!", {id:"tooMany!"});
         }
         initialId = initialId + 1;
     }

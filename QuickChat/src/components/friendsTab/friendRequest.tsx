@@ -70,7 +70,7 @@ export default function FriendRequests(){
     return(
         <>
         <div className='FriendReqContainer'>
-            {requests.map((cont:any, i:any) => (
+            {(requests)? (<text style={{fontSize:30, marginTop:70}}>Nothing Here!</text>):(requests.map((cont:any, i:any) => (
                 <>
                     <motion.div className="FriendReqBoxContainer" key={i} 
                     whileHover={hover} 
@@ -97,9 +97,35 @@ export default function FriendRequests(){
                         </div>  
                     </motion.div>
                 </>
-                // FriendBox(i, cont.email, handleRemoveItem(cont.email))
-                // <h1 key = {i} className="contactslist">{cont.email}</h1>
-            ))}
+            )))}
+            {/* {requests.map((cont:any, i:any) => (
+                <>
+                    <motion.div className="FriendReqBoxContainer" key={i} 
+                    whileHover={hover} 
+                    // whileTap={{scale:1,}}
+                    transition={spring}>
+                        <text className='ReqEmail'>{cont.email}</text>
+                        <div className='Icons'>
+                            <motion.div className='motionIcons'
+                            whileHover={IconHover} 
+                            whileTap={{scale:1,}}
+                            transition={spring}
+                            onClick={() =>handleRemoveItem(cont.email)}
+                            >
+                                <FaTimes className='Xsign'/>
+                            </motion.div>
+                            <motion.div className='motionIcons'
+                            whileHover={IconHover} 
+                            whileTap={{scale:1,}}
+                            transition={spring}
+                            onClick={() =>AcceptFriend(cont.email)}
+                            >
+                                <FaCheck className='checkMark'/>
+                            </motion.div>
+                        </div>  
+                    </motion.div>
+                </>
+            ))} */}
         </div>
         </>
     );
