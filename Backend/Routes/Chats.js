@@ -8,9 +8,9 @@ const db = mysql.createPool({
     database: 'chattingapp',
 });
 
-router.post('/DisplayMessages', (req, res) => {
+router.get('/DisplayMessages/:fromEmail/:toEmail', (req, res) => {
     const userFind = "SELECT * FROM chats WHERE (fromEmail = ? AND toEmail = ? )OR (fromEmail = ? AND toEmail = ?);"
-    db.query(userFind,[req.body.fromEmail, req.body.toEmail, req.body.toEmail, req.body.fromEmail], (err, result) => {
+    db.query(userFind,[req.params.fromEmail, req.params.toEmail, req.params.toEmail, req.params.fromEmail], (err, result) => {
         if(err)
         {
             return res.status(404).json(err)
@@ -22,9 +22,9 @@ router.post('/DisplayMessages', (req, res) => {
     })
     
 })
-router.post('/getUserName', (req, res) => {
+router.get('/getUserName/:email', (req, res) => {
     const userFind = "SELECT * FROM users WHERE email = ?;"
-    db.query(userFind,[req.body.email], (err, result) => {
+    db.query(userFind,[req.params.email], (err, result) => {
         if(result.length > 0){
             return res.json(result)
         }
@@ -49,9 +49,9 @@ router.post('/StoreChats', (req, res) => {
     })
     
 })
-router.post('/getChatPFP', (req, res) => {
+router.get('/getChatPFP/:email', (req, res) => {
     const userFind = "SELECT * FROM users WHERE email = ?;"
-    db.query(userFind,[req.body.email], (err, result) => {
+    db.query(userFind,[req.params.email], (err, result) => {
         if(result.length > 0){
             return res.json(result)
         }

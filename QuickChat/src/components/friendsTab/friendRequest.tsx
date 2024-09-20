@@ -27,9 +27,7 @@ export default function FriendRequests(){
         
     }
     useEffect(() => {
-        Axios.post("http://localhost:3000/users/getFriendReq", {
-            email: curUser,
-        }).then(res => {
+        Axios.get(`http://localhost:3000/users/getFriendReq/${curUser}`).then(res => {
             for(let i = 0; i < res.data.length; i++)
             {
                 setRequests((a: any) => [...a,
@@ -44,12 +42,7 @@ export default function FriendRequests(){
     function handleRemoveItem(email:string) {
         console.log(email)
         setRequests(requests.filter((item: { email: string; }) => item.email !== email))
-        Axios.post("http://localhost:3000/users/deleteRequest", {
-                
-            recieveEmail: curUser,
-            fromEmail: email
-
-        });
+        Axios.delete(`http://localhost:3000/users/deleteRequest/${curUser}/${email}`);
     }
     function AcceptFriend(email:string) {
         console.log(email)
@@ -60,17 +53,12 @@ export default function FriendRequests(){
             Email: email
 
         });
-        Axios.post("http://localhost:3000/users/deleteRequest", {
-                
-            recieveEmail: curUser,
-            fromEmail: email
-
-        });
+        Axios.delete(`http://localhost:3000/users/deleteRequest/${curUser}/${email}`);
     }
     return(
         <>
         <div className='FriendReqContainer'>
-            {(requests)? (<text style={{fontSize:30, marginTop:70}}>Nothing Here!</text>):(requests.map((cont:any, i:any) => (
+            {(requests.length < 0)? (<text style={{fontSize:30, marginTop:70}}>Nothing Here!</text>):(requests.map((cont:any, i:any) => (
                 <>
                     <motion.div className="FriendReqBoxContainer" key={i} 
                     whileHover={hover} 

@@ -95,10 +95,9 @@ router.post('/AddFriend', (req, res) => {
     })         
 
 });
-router.post('/contacts', (req, res) => {
+router.get('/contacts/:email', (req, res) => {
     const userFind = "SELECT DISTINCT email, activity FROM friends WHERE myEmail = ?;"
-    
-    db.query(userFind,[req.body.email], (err, result) => {
+    db.query(userFind,[req.params.email], (err, result) => {
         if(err)
         {
             console.log(err)
@@ -115,9 +114,9 @@ router.post('/contacts', (req, res) => {
         
     })
 });
-router.post('/getName', (req, res) => {
+router.get('/getName/:email', (req, res) => {
     const userInfo = "SELECT * FROM users WHERE email = ?;"
-    db.query(userInfo,[req.body.email], (err, result) => {
+    db.query(userInfo,[req.params.email], (err, result) => {
         if(err)
         {
             console.log(err)
@@ -133,9 +132,9 @@ router.post('/getName', (req, res) => {
         }
     })
 });
-router.post('/getFriendReq', (req, res) => {
+router.get('/getFriendReq/:email', (req, res) => {
     const userFind = "SELECT * FROM friendreq WHERE toEmail = ?;"
-    db.query(userFind,[req.body.email], (err, result) => {
+    db.query(userFind,[req.params.email], (err, result) => {
         
         if(err)
         {
@@ -149,21 +148,25 @@ router.post('/getFriendReq', (req, res) => {
         }
     })
 });
-router.post('/deleteRequest', (req, res) => {
+router.delete('/deleteRequest/:curUser/:fromUser', (req, res) => {
     const deleteToDo = "DELETE FROM friendreq WHERE fromEmail=? AND toEmail=?;"
-    db.query(deleteToDo,[req.body.fromEmail, req.body.recieveEmail], (err, result) => {
+    console.log(req.params)
+    db.query(deleteToDo,[req.params.fromUser, req.params.curUser], (err, result) => {
         if(err)
         {
             console.log(err)
+        }
+        else{
+            res.status(200).json({msg : `deleted`})
         }
         
         
     })
 });
-router.post('/getFriendId', (req, res) => {
+router.get('/getFriendId/:id', (req, res) => {
     const userFind = "SELECT * FROM users WHERE email = ?;"
    
-    db.query(userFind,[req.body.email], (err, result) => {
+    db.query(userFind,[req.params.id], (err, result) => {
         if(err)
         {
             return res.status(404).json(err)

@@ -22,15 +22,10 @@ export default function Contacts(){
     const [search, setSearch] = useState('')
     // const [name, setName] = useState("")
     useEffect(() => {
-        Axios.post("http://localhost:3000/users/contacts", {
-            email: curUser,
-        }).then(res => {
+        Axios.get(`http://localhost:3000/users/contacts/${curUser}`).then(res => {
             for(let i = 0; i < res.data.length; i++)
             {
-                Axios.post("http://localhost:3000/users/getName", {
-                    email: res.data[i].email,
-                }).then(res1 => {
-                    // console.log(res1.data[0].PFP)
+                Axios.get(`http://localhost:3000/users/getName/${res.data[i].email}`).then(res1 => {
                     setContacts((a: any) => [...a,
                     {email: res.data[i].email, name: res1.data[0].username, pfp: res1.data[0].PFP, activity: res.data[i].activity}
                     
@@ -67,10 +62,7 @@ export default function Contacts(){
 
     // }, [update])
     useEffect(() => {
-        Axios.post("http://localhost:3000/chats/DisplayMessages", {
-            fromEmail:curUser,
-            toEmail: currentContact,
-        }).then(res => {
+        Axios.get(`http://localhost:3000/chats/DisplayMessages/${curUser}/${currentContact}`).then(res => {
             //this is needed to reset the array everytime we change chats dont delete it T_T
             setMessages([]); 
             for(let i = 0; i < res.data.length; i++)
@@ -88,16 +80,12 @@ export default function Contacts(){
 
     }, [currentContact])
     useEffect(() => {
-        Axios.post("http://localhost:3000/chats/getUserName", {
-            email: currentContact
-        }).then(res => {
+        Axios.get(`http://localhost:3000/chats/getUserName/${currentContact}`).then(res => {
             setCurUserName(res.data[0].username)
         })
     }, [currentContact])
     useEffect(() => {
-        Axios.post("http://localhost:3000/account/getAccount", { 
-            email: curUser
-        }).then(res => {
+        Axios.get(`http://localhost:3000/account/getAccount/${curUser}`).then(res => {
             setCurPFP(res.data[0].PFP)
         })
     }, [])
@@ -106,9 +94,7 @@ export default function Contacts(){
         setCurContact(value)
         changeCurContact(value)
         // console.log(currentContact)
-         Axios.post("http://localhost:3000/users/getFriendId", {
-                email:value,
-            }).then(res => {
+        Axios.get(`http://localhost:3000/users/getFriendId/${value}`).then(res => {
                 curChatId = res.data[0].id
         });
     }

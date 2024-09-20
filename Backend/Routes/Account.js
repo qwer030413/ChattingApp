@@ -7,9 +7,9 @@ const db = mysql.createPool({
     password: 'qwer',
     database: 'chattingapp',
 });
-router.post('/getAccount', (req, res) => {
+router.get('/getAccount/:email', (req, res) => {
     const userFind = "SELECT * FROM users WHERE email = ?;"
-    db.query(userFind,[req.body.email], (err, result) => {
+    db.query(userFind,[req.params.email], (err, result) => {
         if(result.length > 0){
             return res.json(result)
         }

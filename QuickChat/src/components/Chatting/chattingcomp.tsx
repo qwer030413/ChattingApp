@@ -43,9 +43,7 @@ export default function ChattingComp(currentChat:string, newMessage: any, setNew
     },[])
 
     useEffect(() => {
-        Axios.post("http://localhost:3000/chats/getChatPFP", {
-            email: currentChat
-        }).then(res => {
+        Axios.get(`http://localhost:3000/chats/getChatPFP/${currentChat}`).then(res => {
             setCurChatPFP(res.data[0].PFP)
             setUserBio(res.data[0].Bio)
         })
